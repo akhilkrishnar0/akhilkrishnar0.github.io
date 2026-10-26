@@ -1,0 +1,78 @@
+name: Temporary interaction audit
+on:
+  push:
+    paths: ['.github/workflows/interaction-audit.yml']
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Inspect reference code interaction signatures
+        run: |
+          python3 - <<'PY'
+          import re, urllib.request, json
+          site='https://prajwel.github.io'
+          def get(url):
+              return urllib.request.urlopen(urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0'}),timeout=25).read().decode('utf-8','replace')
+          html=get(site+'/')
+          js=re.search(r'src="([^"]+\.js)"',html)
+          css=re.search(r'href="([^"]+\.css)"',html)
+          print('REFERENCE_HTML',len(html),'JS',js.group(1) if js else '-', 'CSS',css.group(1) if css else '-')
+          if js:
+            source=get(site+js.group(1))
+            print('JS_BYTES',len(source))
+            for term in ['wheel','scroll','touchmove','pointermove','mousemove','IntersectionObserver','requestAnimationFrame','scrollY','scrollTo','setInterval','canvas','three','WebGL','visualViewport']:
+              inds=[m.start() for m in re.finditer(term,source,re.I)]
+              print('JS_PATTERN',term,'COUNT',len(inds))
+              for p in inds[:5]:print('JS_CONTEXT',term,repr(source[max(0,p-220):p+350]))
+          if css:
+            styles=get(site+css.group(1))
+            print('CSS_BYTES',len(styles))
+          PY
+      - name: Scroll interaction study with headless browser
+        run: |
+          cat > /tmp/audit.py <<'PY'
+          import subprocess,urllib.request,json,time,os,base64,socket,struct
+          cmd=['/usr/bin/google-chrome','--headless=new','--no-sandbox','--disable-dev-shm-usage','--disable-gpu','--remote-debugging-port=9228','--remote-allow-origins=*','--user-data-dir=/tmp/audit-chrome','about:blank']
+          p=subprocess.Popen(cmd,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+          try:
+            for z in range(70):
+              try:info=json.load(urllib.request.urlopen('http://127.0.0.1:9228/json',timeout=1));break
+              except Exception:time.sleep(.2)
+            print('CHROME_RUNNING',len(info))
+            import websocket
+            ws=websocket.create_connection(info[0]['webSocketDebuggerUrl'],timeout=16)
+            counter=0
+            def call(method,params={}):
+              global counter
+              counter+=1; i=counter
+              ws.send(json.dumps({'id':i,'method':method,'params':params}))
+              while True:
+                data=json.loads(ws.recv())
+                if data.get('id')==i:
+                  if 'error' in data:raise RuntimeError(data['error'])
+                  return data.get('result',{})
+            call('Page.enable')
+            call('Runtime.enable')
+            call('Emulation.setDeviceMetricsOverride',{'width':1440,'height':950,'deviceScaleFactor':1,'mobile':False})
+            call('Page.navigate',{'url':'https://prajwel.github.io/'})
+            time.sleep(4)
+            def evaluate(expr):
+              r=call('Runtime.evaluate',{'expression':expr,'returnByValue':True,'awaitPromise':True})
+              return r.get('result',{}).get('value')
+            inspect="""(()=>({height:document.documentElement.scrollHeight,inner:innerHeight,y:scrollY,active:[...document.querySelectorAll('button')].filter(x=>x.getAttribute('aria-selected')==='true'||x.getAttribute('aria-pressed')==='true').map(x=>x.textContent.trim()),tabLabels:[...document.querySelectorAll('button')].map(x=>x.textContent.trim()).filter(Boolean).slice(0,30),text:(document.body.innerText||'').slice(0,1700), card:[...document.querySelectorAll('h1')].map(x=>x.getBoundingClientRect().toJSON())}))()"""
+            print('INITIAL',json.dumps(evaluate(inspect))[:3200])
+            for y in [350,850,1450,2250,3750,5500,8500,12000,18000]:
+              call('Runtime.evaluate',{'expression':f'window.scrollTo(0,{y})'})
+              time.sleep(.65)
+              print('SCROLL',y,json.dumps(evaluate(inspect))[:2400])
+            for wheel in range(4):
+              call('Input.dispatchMouseEvent',{'type':'mouseWheel','x':1200,'y':450,'deltaY':731,'deltaX':0})
+              time.sleep(.75)
+              print('WHEEL',wheel,json.dumps(evaluate(inspect))[:1300])
+            ws.close()
+          finally:p.terminate()
+          PY
+          python3 -m pip install -q websocket-client --disable-pip-version-check --timeout 7 --retries 1
+          python3 /tmp/audit.py
