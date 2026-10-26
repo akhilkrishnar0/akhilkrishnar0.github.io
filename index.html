@@ -2,137 +2,97 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#07080c">
-  <meta name="color-scheme" content="dark">
-  <meta name="description" content="Akhil Krishna R — astrophysicist at the Indian Institute of Astrophysics, researching the structure, formation and evolution of galaxies.">
-  <meta property="og:type" content="profile">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050b14">
+  <meta name="description" content="Akhil Krishna R — astrophysicist exploring galaxy formation and evolution. A journey from Earth beyond the Solar System.">
   <meta property="og:title" content="Akhil Krishna R | Astrophysicist">
-  <meta property="og:description" content="Exploring galaxy evolution, polar rings, low-surface-brightness galaxies and stellar structures.">
+  <meta property="og:description" content="An astrophysicist's personal website, seen through the window of an interplanetary spacecraft.">
+  <meta property="og:type" content="website">
   <meta property="og:url" content="https://akhilkrishnar0.github.io/">
   <meta property="og:image" content="https://akhilkrishnar0.github.io/assets/img/social-preview.svg">
-  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="canonical" href="https://akhilkrishnar0.github.io/">
-  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;550;600;650;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=3">
-  <title>Akhil Krishna R — Astrophysicist</title>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Akhil Krishna R","jobTitle":"Astrophysicist","url":"https://akhilkrishnar0.github.io/","affiliation":{"@type":"Organization","name":"Indian Institute of Astrophysics","url":"https://www.iiap.res.in/"},"sameAs":["https://github.com/akhilkrishnar0","https://scholar.google.com/citations?user=iZ4hiU8AAAAJ","https://orcid.org/0000-0002-6096-3330","https://www.linkedin.com/in/akhilkrishnar"]}</script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css?v=4">
+  <title>Akhil Krishna R — A Journey Through Space</title>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Akhil Krishna R","jobTitle":"Astrophysicist","url":"https://akhilkrishnar0.github.io/","affiliation":{"@type":"Organization","name":"Indian Institute of Astrophysics"},"sameAs":["https://github.com/akhilkrishnar0","https://scholar.google.com/citations?user=iZ4hiU8AAAAJ","https://www.linkedin.com/in/akhilkrishnar"]}</script>
 </head>
 <body>
-  <a class="skip-link" href="#intro">Skip to content</a>
-  <canvas id="cosmos" aria-hidden="true"></canvas>
-  <div class="celestial-glow" aria-hidden="true"></div>
-  <div class="noise" aria-hidden="true"></div>
-  <div class="site">
-    <header class="site-header">
-      <div class="header-inner">
-        <a class="site-brand" href="#intro" aria-label="Akhil Krishna R, home">Akhil Krishna R</a>
-        <nav class="cosmic-nav" aria-label="Cosmic perspective" role="tablist">
-          <button type="button" class="planet-tab is-active" data-mode="earth" role="tab" aria-selected="true"><i style="--planet:#3b82f6"></i> Earth</button>
-          <button type="button" class="planet-tab" data-mode="moon" role="tab" aria-selected="false"><i style="--planet:#717b8f"></i> Moon</button>
-          <button type="button" class="planet-tab" data-mode="sun" role="tab" aria-selected="false"><i style="--planet:#ed990d"></i> Sun</button>
-          <button type="button" class="planet-tab" data-mode="galaxy" role="tab" aria-selected="false"><i style="--planet:#6165dc"></i> Galaxy</button>
-          <button type="button" class="planet-tab" data-mode="universe" role="tab" aria-selected="false"><i style="--planet:#a446c5"></i> Universe</button>
-        </nav>
-        <a class="header-github" href="https://github.com/akhilkrishnar0" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" title="GitHub profile"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .7a11.3 11.3 0 0 0-3.57 22.02c.57.1.78-.25.78-.55v-2.16c-3.18.69-3.85-1.35-3.85-1.35-.52-1.32-1.27-1.67-1.27-1.67-1.04-.7.08-.69.08-.69 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.67 1.24 3.33.95.1-.75.4-1.25.73-1.53-2.54-.29-5.2-1.27-5.2-5.66 0-1.25.44-2.27 1.18-3.08-.12-.29-.52-1.45.11-3.01 0 0 .96-.3 3.16 1.18a11 11 0 0 1 5.74 0C14.68 4.3 15.65 4.6 15.65 4.6c.62 1.56.23 2.72.11 3.01.74.81 1.18 1.83 1.18 3.08 0 4.4-2.67 5.37-5.22 5.66.41.36.77 1.06.77 2.13v3.16c0 .3.21.65.78.54A11.3 11.3 0 0 0 12 .7Z"/></svg></a>
-      </div>
-    </header>
-    <main id="intro" class="cosmic-story">
-      <section class="stage scroll-stage earth-stage" id="earth" aria-label="Earth — introduction" data-scene="earth">
-      <article class="profile-card" aria-label="Personal profile">
-        <div class="card-context" aria-live="polite"><span class="status-dot" id="status-dot"></span><strong id="context-name">Earth</strong><span class="context-bullet">·</span><span id="context-distance">0 light-seconds</span></div>
-        <div class="card-divider"></div>
-        <div class="profile-heading">
-          <div class="heading-copy"><h1>Hello! <span class="greeting" aria-label="waving hand">👋🏽</span></h1><p>Akhil Krishna R, PhD</p></div>
-          <span class="profile-image-frame"><span class="profile-initials" aria-hidden="true">AK</span><img class="profile-image" src="https://github.com/akhilkrishnar0.png?size=300" alt="Akhil Krishna R" width="88" height="88" onerror="this.style.display='none'"></span>
-        </div>
-        <p class="introduction">I am an <strong>astrophysicist</strong> at the <a href="https://www.iiap.res.in/" target="_blank" rel="noopener noreferrer">Indian Institute of Astrophysics</a>, Bengaluru. My research explores how <strong>galaxies form and evolve</strong> — from polar rings and low-surface-brightness disks to stellar bars and the faint structures that reveal their past.</p>
-        <div class="card-divider divider-bottom"></div>
-        <div class="contacts">
-          <p class="small-heading">PROFILES &amp; CONTACT</p>
-          <div class="contact-grid">
-            <a href="mailto:akhilkrishna219@gmail.com" class="contact-item email-link" title="Email Akhil"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6 8.5 7 8.5-7"/></svg><span>akhilkrishna219@gmail.com</span></a>
-            <button class="copy-email" type="button" aria-label="Copy email address" title="Copy email address"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg></button>
-            <span class="contact-separator" aria-hidden="true">·</span>
-            <button type="button" class="contact-item detail-trigger" data-panel="research"><span>Research &amp; publications</span><svg class="narrow-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
-            <span class="contact-separator" aria-hidden="true">·</span>
-            <a href="https://github.com/akhilkrishnar0" target="_blank" rel="noopener noreferrer" class="contact-item"><svg viewBox="0 0 24 24" class="github-icon" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.21.68-.48v-1.9c-2.79.61-3.38-1.18-3.38-1.18-.45-1.16-1.12-1.46-1.12-1.46-.91-.63.07-.62.07-.62 1.02.07 1.55 1.04 1.55 1.04.9 1.53 2.35 1.1 2.92.83.1-.65.35-1.1.65-1.35-2.23-.25-4.58-1.12-4.58-4.98 0-1.1.39-2.02 1.04-2.7-.1-.25-.45-1.27.1-2.65 0 0 .85-.27 2.78 1.03A9.7 9.7 0 0 1 12 6.7c.85 0 1.7.11 2.52.34 1.93-1.3 2.78-1.03 2.78-1.03.55 1.38.2 2.4.1 2.65.65.68 1.04 1.6 1.04 2.7 0 3.87-2.35 4.72-4.59 4.97.36.31.69.93.69 1.87v2.8c0 .27.18.58.68.48A10 10 0 0 0 12 2Z"/></svg><span>GitHub</span><svg class="narrow-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-            <a href="https://orcid.org/0000-0002-6096-3330" target="_blank" rel="noopener noreferrer" class="contact-item"><span class="orcid-icon" aria-hidden="true">iD</span> ORCID <svg class="narrow-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-            <span class="contact-separator" aria-hidden="true">·</span>
-            <a href="https://scholar.google.com/citations?user=iZ4hiU8AAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer" class="contact-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="m8.8 11-1.5 10 4.7-3 4.7 3-1.5-10"/></svg><span>Google Scholar</span><svg class="narrow-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-            <span class="contact-separator" aria-hidden="true">·</span>
-            <a href="https://www.linkedin.com/in/akhilkrishnar" target="_blank" rel="noopener noreferrer" class="contact-item"><span class="linkedin-icon" aria-hidden="true">in</span><span>LinkedIn</span><svg class="narrow-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-          </div>
-        </div>
-      </article>
-      <div class="scroll-cue" aria-hidden="true"><span class="scroll-cue-line"></span><span>scroll to explore</span><span class="scroll-cue-arrow">↓</span></div>
-      </section>
-
-      <section class="scroll-stage" id="moon" aria-labelledby="moon-title" data-scene="moon">
-        <article class="chapter-card" style="--chapter-accent: #a6b7d8">
-          <p class="eyebrow"><span class="eyebrow-dot"></span> MOON <span class="eyebrow-muted">· &nbsp;01 / RESEARCH</span></p>
-          <div class="chapter-rule"></div>
-          <h2 id="moon-title">Reading the history <span class="soft-text">written in galaxies.</span></h2>
-          <p class="chapter-lead">My research focuses on the formation, structure, and evolution of galaxies — particularly the faint and unusual features that preserve evidence of their past.</p>
-          <div class="chapter-grid">
-            <div class="chapter-mini"><span class="mini-index">01</span><h3>Polar ring galaxies</h3><p>Misaligned stellar and gaseous structures and the processes that create them.</p></div>
-            <div class="chapter-mini"><span class="mini-index">02</span><h3>Low-surface-brightness galaxies</h3><p>Diffuse stellar disks, ultraviolet light, and structure at the limits of detection.</p></div>
-            <div class="chapter-mini"><span class="mini-index">03</span><h3>Stellar bars &amp; secular evolution</h3><p>How bars reshape galaxies — and how we may recognise the signatures they leave behind.</p></div>
-          </div>
-          <div class="chapter-foot"><span>Observations · morphology · evolution</span><a href="#sun" class="inline-next">Next: methods <span aria-hidden="true">↗</span></a></div>
-        </article>
-      </section>
-
-      <section class="scroll-stage" id="sun" aria-labelledby="sun-title" data-scene="sun">
-        <article class="chapter-card" style="--chapter-accent: #efaf42">
-          <p class="eyebrow"><span class="eyebrow-dot"></span> SUN <span class="eyebrow-muted">· &nbsp;02 / METHODS</span></p>
-          <div class="chapter-rule"></div>
-          <h2 id="sun-title">Connecting observations <span class="soft-text">to physics.</span></h2>
-          <p class="chapter-lead">What appears absent in a galaxy image may simply lie below a survey's detection limits. I am interested in methods that help us distinguish the two.</p>
-          <div class="research-lines">
-            <div class="research-line"><span class="line-number">01</span><div><strong>Multi-wavelength astronomy</strong><p>Combining optical and ultraviolet imaging with other tracers to understand galaxy structure and stellar populations.</p></div></div>
-            <div class="research-line"><span class="line-number">02</span><div><strong>Faint-feature detection</strong><p>Image decomposition, wavelets, and low-surface-brightness techniques for finding structures hidden in the noise.</p></div></div>
-            <div class="research-line"><span class="line-number">03</span><div><strong>Observations &amp; simulations</strong><p>Comparing galaxies on equal footing by accounting for resolution, sensitivity, and selection effects.</p></div></div>
-          </div>
-          <div class="chapter-foot"><span>Imaging · analysis · simulations</span><a href="#galaxy" class="inline-next">Next: work <span aria-hidden="true">↗</span></a></div>
-        </article>
-      </section>
-
-      <section class="scroll-stage" id="galaxy" aria-labelledby="galaxy-title" data-scene="galaxy">
-        <article class="chapter-card" style="--chapter-accent: #9291ff">
-          <p class="eyebrow"><span class="eyebrow-dot"></span> GALAXY <span class="eyebrow-muted">· &nbsp;03 / WORK</span></p>
-          <div class="chapter-rule"></div>
-          <h2 id="galaxy-title">Research &amp; <span class="soft-text">open science.</span></h2>
-          <p class="chapter-lead">Scientific results are more useful when the methods can be explored, tested, and reused. Here are places to find my publications and astronomy-related code.</p>
-          <div class="work-list">
-            <a href="https://scholar.google.com/citations?user=iZ4hiU8AAAAJ" target="_blank" rel="noopener noreferrer" class="work-item"><span class="work-icon">✳</span><span class="work-body"><strong>Publications</strong><small>Research articles and citation record · Google Scholar</small></span><span class="work-arrow">↗</span></a>
-            <a href="https://github.com/akhilkrishnar0/SkyView-Query-and-Visualization" target="_blank" rel="noopener noreferrer" class="work-item"><span class="work-icon">◎</span><span class="work-body"><strong>SkyView query &amp; visualization</strong><small>Astronomical data retrieval and visualisation · GitHub</small></span><span class="work-arrow">↗</span></a>
-            <a href="https://github.com/akhilkrishnar0/galaxycube-hyperspectral" target="_blank" rel="noopener noreferrer" class="work-item"><span class="work-icon">▤</span><span class="work-body"><strong>Galaxy hyperspectral cubes</strong><small>Code for working with astronomical cubes · GitHub</small></span><span class="work-arrow">↗</span></a>
-            <a href="https://github.com/akhilkrishnar0" target="_blank" rel="noopener noreferrer" class="work-item"><span class="work-icon">{ }</span><span class="work-body"><strong>Other projects</strong><small>Browse my open-source work and repositories</small></span><span class="work-arrow">↗</span></a>
-          </div>
-          <div class="chapter-foot"><span>Python · Astropy · open-source tools</span><a href="#universe" class="inline-next">Next: connect <span aria-hidden="true">↗</span></a></div>
-        </article>
-      </section>
-
-      <section class="scroll-stage universe-stage" id="universe" aria-labelledby="universe-title" data-scene="universe">
-        <article class="chapter-card" style="--chapter-accent: #b077ec">
-          <p class="eyebrow"><span class="eyebrow-dot"></span> UNIVERSE <span class="eyebrow-muted">· &nbsp;04 / BEYOND</span></p>
-          <div class="chapter-rule"></div>
-          <h2 id="universe-title">The universe still has <span class="soft-text">more to tell us.</span></h2>
-          <p class="chapter-lead">I see astrophysics as a field that changes each time we look more closely. Every new observation gives us another way to question what we thought we understood.</p>
-          <div class="universe-quote">“The most interesting galaxies are often the ones that challenge the picture we already have.”</div>
-          <div class="reach-out"><p>Interested in galaxies, research ideas, or a collaboration?</p><a href="mailto:akhilkrishna219@gmail.com" class="mail-button">Get in touch <span aria-hidden="true">↗</span></a></div>
-          <div class="chapter-foot"><span>Thank you for exploring.</span><button type="button" class="back-to-earth">↑ &nbsp;top (Earth)</button></div>
-        </article>
-      </section>
-    </main>
-    <footer class="site-footer"><span>© <span id="copyright"></span> Akhil Krishna R</span><button class="footer-top" type="button">↑ &nbsp;top (Earth)</button></footer>
-  </div>
-  <dialog id="research-dialog" class="detail-dialog" aria-labelledby="dialog-title"><div class="dialog-top"><span class="dialog-tag">RESEARCH NOTES</span><button type="button" class="dialog-close" aria-label="Close research and publications">×</button></div><h2 id="dialog-title">Research &amp; publications</h2><p>My work explores the structures and evolutionary histories of galaxies using multi-wavelength observations, imaging, spectroscopy and simulations.</p><div class="interest-grid"><div><strong>Polar ring galaxies</strong><span>Misaligned structures, star formation and formation pathways.</span></div><div><strong>Low-surface-brightness galaxies</strong><span>Extended disks and UV emission in the outskirts of galaxies.</span></div><div><strong>Stellar bars &amp; relic structures</strong><span>Identifying signatures of past secular evolution.</span></div></div><p class="publication-note">For my current and complete publication record, visit <a href="https://scholar.google.com/citations?user=iZ4hiU8AAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar ↗</a>.</p><div class="dialog-bottom"><button class="dialog-done" type="button">Back to the cosmos ↗</button></div></dialog>
-  <div class="copy-status" id="copy-status" role="status" aria-live="polite"></div>
-  <script defer src="assets/js/main.js?v=3"></script>
+<a class="skip-link" href="#earth">Skip to content</a>
+<canvas id="universe-canvas" aria-hidden="true"></canvas>
+<div class="window-vignette" aria-hidden="true"></div>
+<div class="cockpit" aria-hidden="true">
+  <div class="cockpit-top"><span class="top-stitch"></span><span class="hull-mark">ASTERIA <b>07</b></span><span class="top-stitch"></span></div>
+  <div class="cockpit-strut left-strut"></div><div class="cockpit-strut right-strut"></div>
+  <div class="viewport-target"><span class="reticle-dot"></span></div>
+  <div class="cockpit-bottom"><span class="instrument-block left-block"><i></i><i></i><i></i></span><span class="dash-center"><i></i><i></i><i></i><i></i><i></i></span><span class="instrument-block right-block"><i></i><i></i><i></i></span></div>
+</div>
+<header class="header" id="top">
+  <a href="#earth" class="brand" aria-label="Akhil Krishna R, return to Earth"><span class="brand-glyph">A<span>✦</span></span><span>AKHIL KRISHNA R<small>ASTROPHYSICIST</small></span></a>
+  <nav class="flight-nav" aria-label="Space journey">
+    <a class="nav-stop active" href="#earth" data-stage="earth"><span class="nav-dot"></span>Earth</a>
+    <a class="nav-stop" href="#moon" data-stage="moon"><span class="nav-dot"></span>Moon</a>
+    <a class="nav-stop" href="#mars" data-stage="mars"><span class="nav-dot"></span>Mars</a>
+    <a class="nav-stop" href="#saturn" data-stage="saturn"><span class="nav-dot"></span>Saturn</a>
+    <a class="nav-stop" href="#escape" data-stage="escape"><span class="nav-dot"></span>Beyond</a>
+  </nav>
+  <a class="github-link" href="https://github.com/akhilkrishnar0" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">GITHUB <span>↗</span></a>
+</header>
+<div class="flight-hud" aria-hidden="true">
+  <div class="hud-left"><span class="hud-kicker"><i class="live-dot"></i> LIVE FLIGHT FEED</span><span class="hud-label" id="hud-location">EARTH / DEPARTURE</span></div>
+  <div class="hud-right"><span class="hud-kicker">DISTANCE FROM EARTH</span><span class="hud-numeric" id="hud-distance">0 KM</span></div>
+</div>
+<div class="side-progress" role="navigation" aria-label="Journey progress"><span class="side-caption">MISSION ROUTE</span><div class="progress-rail"><div class="progress-fill" id="progress-fill"></div><a href="#earth" aria-label="Earth" class="progress-node selected" data-node="earth"></a><a href="#moon" aria-label="Moon" class="progress-node" data-node="moon"></a><a href="#mars" aria-label="Mars" class="progress-node" data-node="mars"></a><a href="#saturn" aria-label="Saturn" class="progress-node" data-node="saturn"></a><a href="#escape" aria-label="Solar System escape" class="progress-node" data-node="escape"></a></div><span class="side-counter" id="side-counter">01 / 05</span></div>
+<main id="journey">
+  <section class="story-stage" id="earth" data-scene="earth" aria-labelledby="earth-title">
+    <div class="stage-wrap"><article class="content-panel feature-panel">
+      <div class="panel-kicker"><span class="panel-number">01 / 05</span><span class="panel-line"></span><span>DEPARTURE · EARTH</span></div>
+      <div class="profile-row"><span class="profile-photo-frame"><img src="https://github.com/akhilkrishnar0.png?size=220" alt="Akhil Krishna R" width="54" height="54" onerror="this.style.opacity='0'"></span><span>WELCOME ABOARD <small>A PERSONAL RESEARCH JOURNAL</small></span></div>
+      <h1 id="earth-title">Looking further.<br><em>Asking why.</em></h1>
+      <p class="lead">I'm <strong>Akhil Krishna R</strong>, an astrophysicist at the <a href="https://www.iiap.res.in/" target="_blank" rel="noopener noreferrer">Indian Institute of Astrophysics</a>. I study how galaxies form, change, and preserve traces of their past.</p>
+      <div class="panel-footer"><span class="micro-label">GALAXY FORMATION &amp; EVOLUTION</span><a class="panel-next" href="#moon">BEGIN JOURNEY <span>↗</span></a></div>
+    </article></div>
+    <div class="scroll-hint" aria-hidden="true"><span>SCROLL TO LAUNCH</span><i></i><span class="down-chevron">⌄</span></div>
+  </section>
+  <section class="story-stage" id="moon" data-scene="moon" aria-labelledby="moon-title"><div class="stage-wrap"><article class="content-panel">
+    <div class="panel-kicker"><span class="panel-number">02 / 05</span><span class="panel-line"></span><span>LUNAR TRANSFER · RESEARCH</span></div>
+    <h2 id="moon-title">The stories<br><em>galaxies tell.</em></h2>
+    <p class="lead">From polar rings to faint stellar disks, I investigate the structures that help us piece together the evolution of galaxies.</p>
+    <div class="science-list"><div><span>01</span><strong>Polar ring galaxies</strong><small>Formation pathways &amp; misaligned structures</small></div><div><span>02</span><strong>Low-surface-brightness galaxies</strong><small>Diffuse disks and faint outskirts</small></div><div><span>03</span><strong>Stellar bars</strong><small>Internal evolution and galactic morphology</small></div></div>
+    <div class="panel-footer"><span class="micro-label">RESEARCH INTERESTS</span><a class="panel-next" href="#mars">CONTINUE TO MARS <span>↗</span></a></div>
+  </article></div></section>
+  <section class="story-stage" id="mars" data-scene="mars" aria-labelledby="mars-title"><div class="stage-wrap"><article class="content-panel">
+    <div class="panel-kicker"><span class="panel-number">03 / 05</span><span class="panel-line"></span><span>MARS APPROACH · METHODS</span></div>
+    <h2 id="mars-title">Beyond<br><em>the visible.</em></h2>
+    <p class="lead">The most revealing structures can also be the hardest to detect. I connect observations, image analysis, and physics to study them.</p>
+    <div class="science-list"><div><span>01</span><strong>Radio &amp; multi-wavelength data</strong><small>H I, ultraviolet, optical, and spectroscopy</small></div><div><span>02</span><strong>Faint-feature detection</strong><small>Wavelets, image decomposition, morphology</small></div><div><span>03</span><strong>Observations &amp; simulations</strong><small>Connecting evidence with formation histories</small></div></div>
+    <div class="panel-footer"><span class="micro-label">OBSERVATIONS · ANALYSIS</span><a class="panel-next" href="#saturn">CONTINUE TO SATURN <span>↗</span></a></div>
+  </article></div></section>
+  <section class="story-stage" id="saturn" data-scene="saturn" aria-labelledby="saturn-title"><div class="stage-wrap"><article class="content-panel">
+    <div class="panel-kicker"><span class="panel-number">04 / 05</span><span class="panel-line"></span><span>SATURN FLYBY · SELECTED WORK</span></div>
+    <h2 id="saturn-title">Curiosity,<br><em>made reproducible.</em></h2>
+    <p class="lead">Research grows when data, methods, and tools can be shared. Explore my publications and astronomy software.</p>
+    <div class="project-links">
+      <a href="https://scholar.google.com/citations?user=iZ4hiU8AAAAJ" target="_blank" rel="noopener noreferrer"><span><b>Research publications</b><small>Google Scholar · journal articles</small></span><span>↗</span></a>
+      <a href="https://github.com/akhilkrishnar0/SkyView-Query-and-Visualization" target="_blank" rel="noopener noreferrer"><span><b>SkyView Query &amp; Visualization</b><small>Astronomical data tools</small></span><span>↗</span></a>
+      <a href="https://github.com/akhilkrishnar0/galaxycube-hyperspectral" target="_blank" rel="noopener noreferrer"><span><b>Galaxy hyperspectral cubes</b><small>Open-source data analysis</small></span><span>↗</span></a>
+    </div>
+    <div class="panel-footer"><span class="micro-label">OPEN SCIENCE</span><a class="panel-next" href="#escape">LEAVE THE SOLAR SYSTEM <span>↗</span></a></div>
+  </article></div></section>
+  <section class="story-stage" id="escape" data-scene="escape" aria-labelledby="escape-title"><div class="stage-wrap"><article class="content-panel">
+    <div class="panel-kicker"><span class="panel-number">05 / 05</span><span class="panel-line"></span><span>SOLAR SYSTEM ESCAPE · BEYOND</span></div>
+    <h2 id="escape-title">The next question<br><em>is out there.</em></h2>
+    <p class="lead">Astrophysics keeps changing as we look deeper. Every discovery expands what we know — and opens up something new to investigate.</p>
+    <p class="contact-prompt">Interested in discussing galaxies, data, or a collaboration?</p>
+    <a class="primary-button" href="mailto:akhilkrishna219@gmail.com">LET'S CONNECT <span>↗</span></a>
+    <div class="socials"><a href="https://scholar.google.com/citations?user=iZ4hiU8AAAAJ" target="_blank" rel="noopener noreferrer">SCHOLAR ↗</a><a href="https://orcid.org/0000-0002-6096-3330" target="_blank" rel="noopener noreferrer">ORCID ↗</a><a href="https://www.linkedin.com/in/akhilkrishnar" target="_blank" rel="noopener noreferrer">LINKEDIN ↗</a><a href="https://github.com/akhilkrishnar0" target="_blank" rel="noopener noreferrer">GITHUB ↗</a></div>
+    <div class="panel-footer"><span class="micro-label">THANK YOU FOR EXPLORING</span><a class="panel-next" href="#earth">RETURN TO EARTH <span>↑</span></a></div>
+  </article></div></section>
+</main>
+<div class="viewport-footer" aria-hidden="true"><span>FLIGHT SYSTEMS <b>NOMINAL</b></span><span id="travel-status">ORBITAL ASCENT</span><span>SCROLL TO TRAVEL <b>↓</b></span></div>
+<footer class="document-footer">© <span id="year"></span> Akhil Krishna R <span>·</span> Exploring galaxies, from a different perspective.</footer>
+<script defer src="assets/js/main.js?v=4"></script>
 </body>
 </html>

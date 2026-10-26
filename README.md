@@ -1,33 +1,26 @@
-# Akhil Krishna R — Cosmic academic homepage
+# Akhil Krishna R — Spacecraft Journey
 
-A dark, space-themed, interactive personal homepage inspired by [Prajwel Joseph’s website](https://prajwel.github.io/). All animations are implemented in original vanilla JavaScript / HTML Canvas (no external source code, assets, or libraries copied from the reference site).
+A responsive, static academic website presented through an animated spacecraft viewport.
 
-**Live site**: https://akhilkrishnar0.github.io/
+**Live:** https://akhilkrishnar0.github.io/
 
-## Features
+## Journey
 
-- Nearly black starfield with twinkling stars, delicate glowing constellations and pointer-responsive parallax
-- Animated Earth atmosphere with colored spectral bands and orbital paths
-- Five scroll-driven space chapters: Earth, Moon, Sun, Galaxy, Universe
-- Automatic stage switching on scroll (~20%, 42%, 68%, 88%); animated backgrounds morph continuously between scales
-- Parallax stars, constellation twinkle, atmosphere glow, orbital drift, and traveling light streaks
-- On-scroll research/methods/work/contact card reveals and smooth tab navigation
-- Fully responsive glassy profile card, profile photo, academic links, copy-email button
-- Accessible navigation (keyboard arrow keys), semantic markup, reduced-motion support
-- Pop-up research and publications information
-- No build, package manager or web framework needed
+Scroll continuously from **Earth (departure)** through **Moon, Mars, Saturn**, and **Solar System escape**. Navigation links jump to each chapter. The background Canvas animation interpolates across scrolling, while the ship frame and flight instruments stay in place.
 
-## Modify
+All planetary artwork, orbital lines, starfields, and warp effects are procedural HTML Canvas visuals, with no animation/video dependencies.
 
-- `index.html`: personal biography, institutional affiliation, academic links, social profiles and research text.
-- `assets/css/style.css`: visuals and responsive layout.
-- `assets/js/main.js`: animated space background and interactive behaviors.
-- `assets/img/`: project graphics. Avatar is loaded from the linked GitHub profile; to use a custom picture replace the image URL in `index.html` with a local path.
+## Editing
 
-## Deployment
+- `index.html`: Academic biography, research, links, text and navigation.
+- `assets/css/style.css`: Responsive visual design and cockpit.
+- `assets/js/main.js`: Five connected scenes, stars, planet textures and scroll interpolation.
+- `assets/img/`: Metadata graphics.
 
-The included `.github/workflows/pages.yml` automatically deploys the root directory with GitHub Pages on changes to `main`. If needed, set **Settings → Pages → Source → GitHub Actions** in the repo.
+## Deploy
 
-## Credits
+This repository automatically deploys from `main` via `.github/workflows/pages.yml`. GitHub Pages must be configured to use **GitHub Actions**. No compilation, Node.js, or dependencies required.
 
-Inspired by the visual layout and concept of https://prajwel.github.io/. This project is an independent implementation with entirely original animation code and the site owner's own content.
+The site respects `prefers-reduced-motion` and retains semantic, keyboard-accessible navigation.
+
+© Akhil Krishna R. Source code licensed under MIT.
