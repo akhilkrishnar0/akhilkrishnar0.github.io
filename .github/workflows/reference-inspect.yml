@@ -1,0 +1,48 @@
+name: Reference visual inspection (temporary)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Inspect public reference HTML and stylesheet
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import urllib.request,re
+          from html.parser import HTMLParser
+          url="https://prajwel.github.io/"
+          req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0'})
+          html=urllib.request.urlopen(req,timeout=20).read().decode("utf8","replace")
+          print("HTML_BYTES",len(html))
+          for expr in [r'<link[^>]+(?:stylesheet|stylesheet)[^>]*>',r'<script[^>]*>',r'<body[^>]*>',r'<header[^>]*>',r'<nav[^>]*>',r'<main[^>]*>',r'<canvas[^>]*>',r'<style[^>]*>']:
+            print("MATCH",expr)
+            for s in re.findall(expr,html,re.I)[:18]:print(s[:400])
+          for s in re.findall(r'<script[^>]*>(.*?)</script>',html,re.S|re.I):
+            if s.strip(): print("INLINE JS",s[:1200])
+          open("/tmp/reference.html","w").write(html)
+          PY
+      - name: Render public reference screenshot
+        shell: bash
+        run: |
+          set -e
+          BROWSER=$(command -v google-chrome || command -v chromium || command -v chromium-browser)
+          "$BROWSER" --headless --no-sandbox --disable-gpu --hide-scrollbars --disable-dev-shm-usage --screenshot=/tmp/reference.png --window-size=1440,1000 --virtual-time-budget=5000 'https://prajwel.github.io/' >/tmp/browser.log 2>&1 || cat /tmp/browser.log
+          python3 - <<'PY'
+          import os,base64
+          p='/tmp/reference.png'
+          if os.path.exists(p):
+              print('PNG_BYTES',os.path.getsize(p))
+              print('SCREENSHOT_START')
+              print(base64.b64encode(open(p,'rb').read()).decode())
+              print('SCREENSHOT_END')
+          else:
+              print("NO_SCREENSHOT")
+          PY
