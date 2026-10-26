@@ -8,7 +8,10 @@ A dark, space-themed, interactive personal homepage inspired by [Prajwel Josephâ
 
 - Nearly black starfield with twinkling stars, delicate glowing constellations and pointer-responsive parallax
 - Animated Earth atmosphere with colored spectral bands and orbital paths
-- Five navigable perspectives: Earth, Moon, Sun, Galaxy, Universe
+- Five scroll-driven space chapters: Earth, Moon, Sun, Galaxy, Universe
+- Automatic stage switching on scroll (~20%, 42%, 68%, 88%); animated backgrounds morph continuously between scales
+- Parallax stars, constellation twinkle, atmosphere glow, orbital drift, and traveling light streaks
+- On-scroll research/methods/work/contact card reveals and smooth tab navigation
 - Fully responsive glassy profile card, profile photo, academic links, copy-email button
 - Accessible navigation (keyboard arrow keys), semantic markup, reduced-motion support
 - Pop-up research and publications information
