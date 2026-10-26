@@ -1,38 +1,58 @@
-/* Tiny enhancements only: the website works without JavaScript. */
-(() => {
-  const themeButton = document.getElementById('theme-toggle');
-  const themeLabel = document.getElementById('theme-label');
-  const saveTheme = (theme) => { try { localStorage.setItem('akhil-site-theme', theme); } catch (_) {} };
-  const getTheme = () => { try { return localStorage.getItem('akhil-site-theme'); } catch (_) { return null; } };
-  function applyTheme(dark) {
-    document.body.classList.toggle('dark', dark);
-    themeButton?.setAttribute('aria-pressed', String(dark));
-    themeButton?.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
-    if (themeLabel) themeLabel.textContent = dark ? 'Light mode' : 'Dark mode';
-    if (themeButton?.firstElementChild) themeButton.firstElementChild.textContent = dark ? '☀' : '☾';
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#101b23' : '#f6f8fa');
-  }
-  const saved = getTheme();
-  applyTheme(saved ? saved === 'dark' : window.matchMedia?.('(prefers-color-scheme: dark)').matches);
-  themeButton?.addEventListener('click', () => {
-    const dark = !document.body.classList.contains('dark');
-    applyTheme(dark);
-    saveTheme(dark ? 'dark' : 'light');
-  });
-  const year = document.getElementById('year');
-  if (year) year.textContent = new Date().getFullYear();
-  const links = [...document.querySelectorAll('.nav-link')];
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      const visible = entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio-a.intersectionRatio);
-      if (visible.length) {
-        links.forEach(a => {
-          const active = a.getAttribute('href') === `#${visible[0].target.id}`;
-          a.classList.toggle('active', active);
-          if (active) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
-        });
-      }
-    }, {rootMargin:'-18% 0px -55% 0px', threshold:[0,.15,.35]});
-    document.querySelectorAll('.anchor-section').forEach(el => observer.observe(el));
-  }
+/* Original hand-coded cosmic animation; no third-party scripts or dependencies. */
+(()=>{
+  'use strict';
+  const canvas=document.getElementById('cosmos');
+  const ctx=canvas.getContext('2d',{alpha:false});
+  if(!ctx)return;
+  const modeButtons=[...document.querySelectorAll('[data-mode]')];
+  const label=document.getElementById('context-name');
+  const distance=document.getElementById('context-distance');
+  const dot=document.getElementById('status-dot');
+  const modes={earth:{label:'Earth',distance:'0 light-seconds',color:'#3b82f6'},moon:{label:'Moon',distance:'1.3 light-seconds',color:'#8e98ae'},sun:{label:'Sun',distance:'8.3 light-minutes',color:'#f59e0b'},galaxy:{label:'Galaxy',distance:'26,000 light-years',color:'#7476e9'},universe:{label:'Universe',distance:'13.8 billion light-years',color:'#a855f7'}};
+  let current='earth',previous='',start=0,W=0,H=0,D=1,raf=0,mouse={x:0,y:0};
+  let reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rng=(seed)=>()=>((seed=Math.imul(seed^seed>>>15,1|seed),seed^=seed+Math.imul(seed^seed>>>7,61|seed),((seed^seed>>>14)>>>0)/4294967296));
+  const rand=rng(1234567);
+  const stars=Array.from({length:175},()=>({x:rand(),y:rand(),radius:.35+rand()*1.35,phase:rand()*6.3,speed:.4+rand()*1.3,opacity:.12+rand()*.38,tint:rand()}));
+  const constellations=[
+    {color:'#b3dfff',points:[[.137,.397],[.17,.37],[.204,.409],[.184,.469],[.17,.461],[.156,.46],[.141,.539],[.206,.531],[.184,.469],[.17,.37]],links:[[0,1],[1,2],[0,3],[3,4],[4,5],[5,6],[6,7],[7,8],[2,8],[3,5]]},
+    {color:'#d3e7ff',points:[[.735,.352],[.757,.372],[.779,.379],[.806,.393],[.845,.393],[.84,.447],[.803,.452],[.803,.393]],links:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7]]},
+    {color:'#dcb76d',points:[[.391,.816],[.404,.831],[.418,.816],[.429,.854],[.408,.878],[.392,.866],[.388,.909]],links:[[0,1],[1,2],[1,3],[3,4],[4,5],[5,6]]},
+    {color:'#c5a85d',points:[[.459,.852],[.466,.815],[.48,.791],[.489,.834],[.475,.87],[.465,.897],[.477,.917]],links:[[0,1],[1,2],[2,3],[1,4],[4,5],[5,6]]},
+    {color:'#d7ad4d',points:[[.55,.755],[.539,.782],[.567,.785],[.575,.764]],links:[[0,1],[1,2],[2,3]]},
+    {color:'#aab8ff',points:[[.594,.866],[.617,.846],[.629,.89],[.646,.921],[.635,.946]],links:[[0,1],[1,2],[2,3],[3,4]]},
+    {color:'#b9d3fd',points:[[.337,.887],[.314,.904],[.333,.934],[.35,.913],[.359,.951],[.329,.963]],links:[[0,1],[1,2],[2,3],[3,4],[1,5]]},
+  ];
+  function fit(){D=Math.min(window.devicePixelRatio||1,2);W=window.innerWidth;H=window.innerHeight;canvas.width=Math.floor(W*D);canvas.height=Math.floor(H*D);canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(D,0,0,D,0,0)}
+  const lerp=(a,b,x)=>a+(b-a)*x;
+  const ease=(x)=>x*x*(3-2*x);
+  function glow(x,y,r,color,opacity=1){let g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,color);g.addColorStop(1,'transparent');ctx.save();ctx.globalAlpha=opacity;ctx.fillStyle=g;ctx.fillRect(x-r,y-r,2*r,2*r);ctx.restore()}
+  function star(x,y,r,color='#fff',power=1){glow(x,y,r*8,color,.14*power);glow(x,y,r*3,color,.27*power);ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=color;ctx.globalAlpha=Math.min(1,power);ctx.fill();ctx.globalAlpha=1}
+  function background(t){ctx.fillStyle='#07080c';ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(W*.50,H*1.04,0,W*.5,H*.85,Math.max(W,H)*.85);g.addColorStop(0,'#0a1230');g.addColorStop(.45,'#070911');g.addColorStop(1,'#07080c');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);for(const s of stars){const f=reduced?1:.67+.33*Math.sin(t*s.speed+s.phase);ctx.fillStyle=s.tint>.95?`rgba(173,198,255,${s.opacity*f})`:`rgba(201,211,225,${s.opacity*f})`;ctx.beginPath();ctx.arc(s.x*W+mouse.x*(s.radius/7),s.y*H+mouse.y*(s.radius/7),s.radius,0,Math.PI*2);ctx.fill()}}
+  function arcEarth(t,alpha=1){ctx.save();ctx.globalAlpha=alpha;const S=Math.max(W/1440,H/1000),cx=W*.5,cy=H*.95+500*S,rx=895*S,ry=850*S; // broad astronomical horizon
+    ctx.fillStyle='#020b1c';ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);ctx.fill();
+    // Extended bands of atmospheric light: individual translucent spectral threads.
+    for(let i=100;i>=0;i--){const f=i/100,ex=rx+(i+2)*1.14*S,ey=ry+(i+2)*.62*S;const hue=lerp(208,345,f);ctx.beginPath();ctx.ellipse(cx,cy,ex,ey,0,Math.PI*1.05,Math.PI*1.95,false);ctx.strokeStyle=`hsla(${hue},${lerp(89,97,f)}%,${lerp(52,64,f)}%,${lerp(.27,.045,f)})`;ctx.lineWidth=1.5*S;ctx.stroke();}
+    // Vertical spectral bars create the telescope-diffraction-like effect on the limb.
+    for(let i=0;i<220;i++){const a=Math.PI*(1.075+(i/219)*.85);const ir=rx+5*S,or=rx+(62+Math.sin(i*1.71)*19)*S;const sx=cx+Math.cos(a)*ir,sy=cy+Math.sin(a)*(ry+5*S);const ex=cx+Math.cos(a)*or,ey=cy+Math.sin(a)*(ry+(62+Math.sin(i*1.71)*19)*.57*S);ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);const hue=200+120*(.5+.5*Math.sin(i/55));ctx.strokeStyle=`hsla(${hue},100%,63%,${(.025+.065*(.5+.5*Math.sin(i*.21+t*.12)))})`;ctx.lineWidth=4*S;ctx.stroke();}
+    ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,Math.PI*1.02,Math.PI*1.98,false);ctx.strokeStyle='rgba(54,171,255,.61)';ctx.lineWidth=3*S;ctx.shadowBlur=15*S;ctx.shadowColor='#1f9fff';ctx.stroke();ctx.shadowBlur=0;
+    // Diffuse underglow along the outer upper atmosphere.
+    glow(cx,cy-ry-13*S,260*S,'#a35aef',.09);
+    ctx.setLineDash([5*S,10*S]);ctx.lineWidth=1*S;ctx.beginPath();ctx.ellipse(cx,cy,rx+260*S,ry+195*S,0,Math.PI*1.05,Math.PI*1.95,false);ctx.strokeStyle='rgba(27,134,211,.6)';ctx.stroke();ctx.setLineDash([]);
+    ctx.restore();}
+  function moon(t,alpha=1){ctx.save();ctx.globalAlpha=alpha;const S=Math.max(W/1440,H/1000),cx=W*.53,cy=H+620*S,r=850*S;glow(cx,cy-r,300*S,'#8ca3d3',.13);ctx.fillStyle='#181c2c';ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();let g=ctx.createLinearGradient(cx-r,cy-r,cx+r,cy);g.addColorStop(0,'#909db1');g.addColorStop(.34,'#536178');g.addColorStop(.76,'#1e2434');g.addColorStop(1,'#131624');ctx.save();ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.clip();ctx.globalAlpha*=.65;ctx.fillStyle=g;ctx.fillRect(cx-r,cy-r,2*r,2*r);const rd=rng(3543);for(let i=0;i<210;i++){const theta=rd()*Math.PI*2,rad=Math.sqrt(rd())*r,x=cx+rad*Math.cos(theta),y=cy+rad*Math.sin(theta),cr=(3+rd()*60)*S;ctx.strokeStyle=`rgba(5,9,18,${.03+rd()*.12})`;ctx.lineWidth=(1+rd()*4)*S;ctx.beginPath();ctx.ellipse(x,y,cr,cr*.72,0,0,Math.PI*2);ctx.stroke();}ctx.restore();ctx.beginPath();ctx.arc(cx,cy,r,Math.PI*1.1,Math.PI*1.9);ctx.strokeStyle='rgba(198,214,240,.74)';ctx.lineWidth=2*S;ctx.shadowBlur=23*S;ctx.shadowColor='#c3d5ff';ctx.stroke();ctx.restore()}
+  function sun(t,alpha=1){ctx.save();ctx.globalAlpha=alpha;const S=Math.max(W/1440,H/1000),cx=W*.5,cy=H+680*S,r=840*S;for(let i=8;i>=0;i--)glow(cx,cy-r,230*S+i*29*S,`rgba(244,${90+i*4},38,1)`,(.07+i*.006)*alpha);let g=ctx.createRadialGradient(cx,cy-r*.8,r*.05,cx,cy,r);g.addColorStop(0,'#fff0b8');g.addColorStop(.45,'#ff9e20');g.addColorStop(.95,'#b63a10');ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();for(let i=0;i<180;i++){const a=Math.PI*(1.04+i/180*.92),dist=(r+Math.sin(i*1.92+t*.4)*26*S);ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*(r-3*S),cy+Math.sin(a)*(r-3*S));ctx.lineTo(cx+Math.cos(a)*(dist+18*S),cy+Math.sin(a)*(dist+18*S));ctx.strokeStyle=`rgba(255,${85+Math.floor(i%75)},55,${.08+.09*Math.sin(i*.5)**2})`;ctx.lineWidth=1.5*S;ctx.stroke()}ctx.beginPath();ctx.arc(cx,cy,r,Math.PI*1.06,Math.PI*1.94);ctx.strokeStyle='#ffbc55';ctx.lineWidth=3*S;ctx.shadowColor='#ff722b';ctx.shadowBlur=36*S;ctx.stroke();ctx.restore()}
+  function galaxy(t,alpha=1){ctx.save();ctx.globalAlpha=alpha;const S=Math.max(W/1440,H/1000),x=W*.52,y=H*.94,r=480*S;ctx.translate(x,y);ctx.rotate(-.18);glow(0,0,r*.95,'#293e8a',.13);glow(0,0,r*.4,'#ab82ef',.19);glow(0,0,70*S,'#ffe4b1',.23);const rd=rng(99412);for(let arm=0;arm<4;arm++){for(let i=0;i<850;i++){const frac=(i+rd()*.7)/850;const theta=frac*Math.PI*3+arm*Math.PI/2+(reduced?0:t*.015);const radial=r*Math.pow(frac,.78);const spread=(rd()-.5)*(14+65*frac)*S;const sx=Math.cos(theta)*(radial+spread),sy=Math.sin(theta)*(radial+spread)*.38;ctx.fillStyle=['rgba(130,170,255,.45)','rgba(194,148,241,.46)','rgba(251,207,166,.44)','rgba(108,145,247,.32)'][arm];ctx.beginPath();ctx.arc(sx,sy,(rd()*1.4+.25)*S,0,2*Math.PI);ctx.fill()}}star(0,0,7*S,'#fff0cb',1);ctx.restore()}
+  function universe(t,alpha=1){ctx.save();ctx.globalAlpha=alpha;const S=Math.max(W/1440,H/1000);glow(W*.32,H*.82,370*S,'#713dcd',.15);glow(W*.74,H*.79,370*S,'#284cc5',.13);glow(W*.53,H*.98,500*S,'#a42e7b',.1);const rd=rng(77298);const nodes=Array.from({length:110},()=>({x:rd()*W,y:H*.53+rd()*H*.66}));for(let i=0;i<nodes.length;i++){let p=nodes[i];for(let j=i+1;j<nodes.length;j++){let q=nodes[j],dx=p.x-q.x,dy=p.y-q.y;const d=Math.hypot(dx,dy);if(d<125*S){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle=`rgba(147,114,244,${(.11*(1-d/(125*S))).toFixed(4)})`;ctx.lineWidth=.6*S;ctx.stroke()}}ctx.fillStyle=i%4===0?'rgba(210,167,255,.63)':'rgba(151,170,252,.45)';ctx.beginPath();ctx.arc(p.x,p.y,(i%6===0?1.9:1.05)*S,0,Math.PI*2);ctx.fill()}ctx.restore()}
+  function constellation(t,alpha=1){ctx.save();ctx.globalAlpha=alpha;const S=Math.min(W/1440,H/1000);for(const group of constellations){if(group.points.some(p=>p[1]*H<80))continue;ctx.strokeStyle='rgba(192,203,225,.40)';ctx.lineWidth=.95*S;for(let [a,b] of group.links){let p=group.points[a],q=group.points[b];ctx.beginPath();ctx.moveTo(p[0]*W+mouse.x*.1,p[1]*H+mouse.y*.1);ctx.lineTo(q[0]*W+mouse.x*.1,q[1]*H+mouse.y*.1);ctx.stroke()}for(let i=0;i<group.points.length;i++){const p=group.points[i],x=p[0]*W+mouse.x*.1,y=p[1]*H+mouse.y*.1,big=i%4===0;star(x,y,(big?3.9:2.25)*S,group.color,big?.98:.9)}}ctx.restore()}
+  function render(ms){const t=ms*.001;ctx.setTransform(D,0,0,D,0,0);background(t);let fade=Math.min(1,(ms-start)/1150);const content=fade<1?ease(fade):1;if(previous && content<1){drawMode(previous,t,1-content)}drawMode(current,t,content);constellation(t,current==='earth'?1:current==='moon'?.5:.4);if(!reduced)raf=requestAnimationFrame(render)}
+  function drawMode(mode,t,alpha){if(alpha<=0)return;switch(mode){case 'earth':arcEarth(t,alpha);break;case 'moon':moon(t,alpha);break;case 'sun':sun(t,alpha);break;case 'galaxy':galaxy(t,alpha);break;case 'universe':universe(t,alpha);break;}}
+  function setMode(mode,button){if(!modes[mode]||mode===current)return;previous=current;current=mode;start=performance.now();modeButtons.forEach(b=>{const yes=b.dataset.mode===mode;b.classList.toggle('is-active',yes);b.setAttribute('aria-selected',String(yes));b.setAttribute('tabindex',yes?'0':'-1')});label.textContent=modes[mode].label;distance.textContent=modes[mode].distance;dot.style.background=modes[mode].color;if(reduced)render(performance.now()+1400);try{history.replaceState(null,'','#'+mode)}catch(e){} }
+  modeButtons.forEach((btn,i)=>{btn.addEventListener('click',()=>setMode(btn.dataset.mode,btn));btn.addEventListener('keydown',(e)=>{if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;e.preventDefault();const next=modeButtons[(i+modeButtons.length+(e.key==='ArrowRight'?1:-1))%modeButtons.length];next.focus();setMode(next.dataset.mode,next)})});
+  addEventListener('resize',()=>{fit();if(reduced)render(performance.now()+1400)},{passive:true});addEventListener('pointermove',e=>{mouse.x=(e.clientX/W-.5)*8;mouse.y=(e.clientY/H-.5)*8},{passive:true});
+  const saved=location.hash.slice(1).toLowerCase();if(modes[saved]&&saved!=='earth'){current=saved;modeButtons.forEach(btn=>{const yes=btn.dataset.mode===saved;btn.classList.toggle('is-active',yes);btn.setAttribute('aria-selected',String(yes))});label.textContent=modes[saved].label;distance.textContent=modes[saved].distance;dot.style.background=modes[saved].color}
+  fit();start=performance.now()-1400;render(performance.now());
+  const dialog=document.getElementById('research-dialog');document.querySelectorAll('.detail-trigger').forEach(b=>b.addEventListener('click',()=>dialog.showModal()));document.querySelectorAll('.dialog-close,.dialog-done').forEach(b=>b.addEventListener('click',()=>dialog.close()));dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
+  const copyButton=document.querySelector('.copy-email');const status=document.getElementById('copy-status');let copyTimer;copyButton.addEventListener('click',async()=>{try{await navigator.clipboard.writeText('akhilkrishna219@gmail.com');status.textContent='Email copied to clipboard'}catch(e){status.textContent='Email: akhilkrishna219@gmail.com'}status.classList.add('show');clearTimeout(copyTimer);copyTimer=setTimeout(()=>status.classList.remove('show'),2400)});
+  document.getElementById('copyright').textContent=new Date().getFullYear();
 })();
