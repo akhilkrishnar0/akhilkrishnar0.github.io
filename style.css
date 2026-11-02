@@ -8,7 +8,7 @@ p{margin:0 0 16px}a{color:#bcd2f3;text-underline-offset:3px}a:hover{color:#eef5f
 .heading>p{color:#c8c9cd;margin:0 0 14px}
 nav{display:flex;gap:25px;flex-wrap:wrap;margin-top:17px}nav a{font-size:14px}
 .intro-grid{display:grid;grid-template-columns:290px minmax(0,1fr);gap:56px;align-items:start;margin:53px 0 41px}
-.profile img{width:245px;max-width:100%;height:auto;aspect-ratio:5/6;object-fit:cover;border:1px solid #45464b;background:#17181a}
+.profile img{width:260px;max-width:100%;height:auto;aspect-ratio:5/6;object-fit:cover;border:1px solid #45464b;background:#17181a}
 .links ul{margin-top:0}ul{padding-left:23px;margin:0 0 17px}li{margin-bottom:9px}
 section:not(.intro-grid){margin-top:45px}section p,section li{max-width:750px}#research ul{margin-top:6px}
 .cv{list-style:disc}.cv strong{font-weight:600}
