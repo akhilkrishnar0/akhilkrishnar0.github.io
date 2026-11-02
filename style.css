@@ -24,7 +24,7 @@ body{background:transparent;min-height:100vh}
 .sky-photo,.sky-fallback{position:absolute;top:0;left:0;height:100%;width:auto;min-width:100%;max-width:none;display:block;transform:translate3d(var(--sky-pan),0,0);will-change:transform}/* akr*/
 @keyframes pan-animation {
   from { --sky-pan: 0px; }
-  to { --sky-pan: -500px; } /* Increase this negative value to move more */
+  to { --sky-pan: -1500px; } /* Increase this negative value to move more */
 }
 
 .sky-photo {
