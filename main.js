@@ -1,7 +1,7 @@
 'use strict';
 const year=document.getElementById('year');if(year)year.textContent=new Date().getFullYear();
 (()=>{
- const panel=document.querySelector('.sky-panel'),canvas=document.querySelector('.sky-fallback'),photo=document.querySelector('.sky-photo');
+ const panel=document.querySelector('.milkyway-backdrop'),canvas=document.querySelector('.sky-fallback'),photo=document.querySelector('.sky-photo');
  if(!panel||!canvas)return;
  const ctx=canvas.getContext('2d');if(!ctx)return;
  const W=1800,H=700;canvas.width=W;canvas.height=H;
@@ -44,12 +44,14 @@ const year=document.getElementById('year');if(year)year.textContent=new Date().g
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
  let raf=0;
  function update(){
-  raf=0;if(reduced.matches){panel.style.setProperty('--sky-pan','0px');panel.style.setProperty('--sky-tilt','0deg');return}
-  const r=panel.getBoundingClientRect(),vh=innerHeight||document.documentElement.clientHeight;
-  const p=Math.max(0,Math.min(1,(vh-r.top)/(vh+r.height)));
-  const span=Math.min(r.width*.29,280);
-  panel.style.setProperty('--sky-pan',((.5-p)*2*span).toFixed(1)+'px');
-  panel.style.setProperty('--sky-tilt',((p-.5)*2.4).toFixed(2)+'deg');
+  raf=0;
+  if(reduced.matches){panel.style.setProperty('--sky-pan','0px');panel.style.setProperty('--sky-rise','0px');return}
+  const extent=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+  const p=Math.max(0,Math.min(1,scrollY/extent));
+  const wide=innerWidth<620;
+  const maxShift=wide?innerWidth*.88:Math.min(innerWidth*.48,640);
+  panel.style.setProperty('--sky-pan',((.5-p)*2*maxShift).toFixed(1)+'px');
+  panel.style.setProperty('--sky-rise',((p-.5)*22).toFixed(1)+'px');
  }
  function tick(){if(!raf)raf=requestAnimationFrame(update)}
  update();addEventListener('scroll',tick,{passive:true});addEventListener('resize',tick);reduced.addEventListener?.('change',tick);
