@@ -1,0 +1,36 @@
+name: Cache official Milky Way panorama
+on:
+  push:
+    paths:
+      - '.github/workflows/cache-milkyway.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Fetch ESO image and optimize for website
+        run: |
+          set -euo pipefail
+          python -m pip install --quiet Pillow
+          for url in "https://www.eso.org/public/archives/images/large/eso0932a.jpg" "https://cdn.eso.org/images/large/eso0932a.jpg" "https://www.eso.org/public/archives/images/publicationjpg/eso0932a.jpg"; do
+            if curl -fLSs --retry 2 --connect-timeout 15 --max-time 70 "$url" -o /tmp/milkyway-original.jpg; then break; fi
+          done
+          python - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          image=Image.open('/tmp/milkyway-original.jpg').convert('RGB')
+          image.thumbnail((4000,2200),Image.Resampling.LANCZOS)
+          image.save('assets/img/milkyway.webp','WEBP',quality=84,method=6)
+          print('Saved official ESO panorama',image.size,Path('assets/img/milkyway.webp').stat().st_size)
+          PY
+      - name: Commit local image
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/img/milkyway.webp
+          git diff --cached --quiet || (git commit -m "Store optimized ESO Milky Way panorama locally" && git push)

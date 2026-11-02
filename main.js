@@ -40,18 +40,29 @@ const year=document.getElementById('year');if(year)year.textContent=new Date().g
    ctx.globalAlpha=.25+rand()*.72;ctx.fillStyle=rand()<.25?'#f4daba':'#dce9ff';ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
  }
  ctx.globalAlpha=1;
- if(photo){photo.addEventListener('error',()=>photo.classList.add('failed'));if(photo.complete&&photo.naturalWidth===0)photo.classList.add('failed')}
+ if(photo){
+   const external='https://www.eso.org/public/archives/images/large/eso0932a.jpg';
+   photo.addEventListener('error',()=>{
+     if(!photo.dataset.remoteTried){photo.dataset.remoteTried='1';photo.src=external}
+     else photo.classList.add('failed');
+   });
+   photo.addEventListener('load',()=>{photo.classList.remove('failed');tick()});
+   if(photo.complete && photo.naturalWidth===0) photo.dispatchEvent(new Event('error'));
+ }
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
  let raf=0;
  function update(){
-  raf=0;
-  if(reduced.matches){panel.style.setProperty('--sky-pan','0px');panel.style.setProperty('--sky-rise','0px');return}
-  const extent=Math.max(1,document.documentElement.scrollHeight-innerHeight);
-  const p=Math.max(0,Math.min(1,scrollY/extent));
-  const wide=innerWidth<620;
-  const maxShift=wide?innerWidth*.88:Math.min(innerWidth*.48,640);
-  panel.style.setProperty('--sky-pan',((.5-p)*2*maxShift).toFixed(1)+'px');
-  panel.style.setProperty('--sky-rise',((p-.5)*22).toFixed(1)+'px');
+   raf=0;
+   if(reduced.matches){panel.style.setProperty('--sky-pan','0px');return}
+   const viewportWidth=panel.clientWidth,viewportHeight=panel.clientHeight;
+   const total=Math.max(1,document.documentElement.scrollHeight-window.innerHeight);
+   const progress=Math.max(0,Math.min(1,window.scrollY/total));
+   const sourceAspect=photo && photo.naturalWidth>0 ? photo.naturalWidth/photo.naturalHeight : W/H;
+   // The actual rendered panorama is its aspect ratio times the viewport height.
+   const width=Math.max(viewportWidth,viewportHeight*sourceAspect);
+   const overflow=Math.max(0,width-viewportWidth);
+   // At top, view the right end of the sky. As the page scrolls, the band moves left -> right.
+   panel.style.setProperty('--sky-pan',(-overflow*(1-progress)).toFixed(2)+'px');
  }
  function tick(){if(!raf)raf=requestAnimationFrame(update)}
  update();addEventListener('scroll',tick,{passive:true});addEventListener('resize',tick);reduced.addEventListener?.('change',tick);
