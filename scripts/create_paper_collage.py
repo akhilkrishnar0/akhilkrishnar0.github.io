@@ -9,7 +9,7 @@ PAPERS=[
  ("2503.03709","pasa_evolution",1),
  ("2404.10059","mnras_globular",1),
  ("2308.15534","aa_ring_candidate",1),
- ("2410.17328","mnras_uv_upturn",3),
+ ("2410.17328","mnras_uv_upturn",4),
 ]
 headers={"User-Agent":"Academic-website-figure-collage/1.0 (research visualization)"}
 def pdf_download(arxiv_id):
