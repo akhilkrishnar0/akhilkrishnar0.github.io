@@ -1,0 +1,25 @@
+name: Assemble original first-author paper figures
+on:
+  push:
+    paths:
+      - '.github/workflows/create-paper-collage.yml'
+      - 'scripts/create_paper_collage.py'
+permissions:
+  contents: write
+jobs:
+  collage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Install PDF and image utilities
+        run: python -m pip install --quiet pymupdf pillow requests
+      - name: Extract authentic published figures and assemble collage
+        run: python scripts/create_paper_collage.py
+      - name: Save collage and source figure images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/img/research_figures/
+          git diff --cached --quiet || (git commit -m "Add original published figure collage from first-author papers" && git push)
