@@ -19,8 +19,8 @@ footer{border-top:1px solid #2e3035;margin-top:48px;padding-top:20px;color:#9699
 :root{--sky-pan:0px;--sky-rise:0px}
 html{background:#03050a}
 body{background:transparent;min-height:100vh}
-.milkyway-backdrop{position:fixed;inset:0;z-index:-1;overflow:hidden;background:#02040a;pointer-events:none;isolation:isolate}
-.sky-photo,.sky-fallback{position:absolute;top:50%;left:50%;width:max(195vw,175vh);height:120vh;max-width:none;object-fit:cover;object-position:center;transform:translate3d(calc(-50% + var(--sky-pan)) ,calc(-50% + var(--sky-rise)),0);will-change:transform}
+.milkyway-backdrop{position:fixed;inset:0;z-index:0;overflow:hidden;background:#02040a;pointer-events:none;isolation:isolate}
+.sky-photo,.sky-fallback{position:absolute;top:50%;left:50%;width:max(215vw,175vh);height:120vh;max-width:none;object-fit:cover;object-position:center;transform:translate3d(calc(-50% + var(--sky-pan)) ,calc(-50% + var(--sky-rise)),0);will-change:transform}
 .sky-fallback{height:120vh;z-index:0}
 .sky-photo{z-index:1;filter:brightness(.88) saturate(.83);opacity:.86;transition:opacity .25s}
 .sky-photo.failed{opacity:0}
@@ -30,5 +30,5 @@ body{background:transparent;min-height:100vh}
 section:not(.intro-grid){margin-top:50px}
 #research,#cv,#contact{padding:19px 22px 14px;margin-left:-22px;margin-right:-22px;background:linear-gradient(90deg,rgba(3,5,10,.30),rgba(3,5,10,.16));border-radius:3px}
 .sky-attribution{float:right}.sky-attribution a{color:#acbed5}
-@media(max-width:620px){.sky-photo,.sky-fallback{width:270vw;height:112vh}.sky-vignette{background:rgba(3,5,10,.70)}.sky-attribution{display:block;float:none;margin-top:6px}#research,#cv,#contact{padding:15px 14px;margin-left:-14px;margin-right:-14px}}
+@media(max-width:620px){.sky-photo,.sky-fallback{width:300vw;height:112vh}.sky-vignette{background:rgba(3,5,10,.70)}.sky-attribution{display:block;float:none;margin-top:6px}#research,#cv,#contact{padding:15px 14px;margin-left:-14px;margin-right:-14px}}
 @media(prefers-reduced-motion:reduce){.sky-photo,.sky-fallback{transform:translate3d(-50%,-50%,0);will-change:auto}}
