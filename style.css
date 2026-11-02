@@ -16,14 +16,18 @@ footer{border-top:1px solid #2e3035;margin-top:48px;padding-top:20px;color:#9699
 @media(max-width:620px){.page{padding:30px 23px 54px}h1{font-size:30px}h2{font-size:21px}.intro-grid{grid-template-columns:1fr;gap:30px;margin-top:38px}.profile img{width:175px}section:not(.intro-grid){margin-top:36px}nav{gap:18px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
-/* Scroll-controlled Milky Way panorama, preserving the minimal academic layout. */
-:root{--sky-x:12%;--sky-y:48%;--sky-tilt:-1.8deg}
-.sky-panel{position:relative;margin:35px 0 45px!important;border:1px solid #2e3035;background:#050608;overflow:hidden}
-.sky-track{height:clamp(210px,36vw,350px);position:relative;overflow:hidden;background:#040509}
-.sky-image{position:absolute;inset:-4%;background-image:linear-gradient(180deg,rgba(6,7,11,.15),rgba(6,7,11,0) 30%,rgba(6,7,11,.24) 100%),url("https://www.eso.org/public/archives/images/large/eso0932a.jpg");background-size:cover,auto 155%;background-repeat:no-repeat;background-position:center,var(--sky-x) var(--sky-y);transform:scale(1.04) rotate(var(--sky-tilt));will-change:background-position;pointer-events:none}
-.sky-caption{display:flex;justify-content:space-between;gap:20px;align-items:baseline;padding:12px 15px 7px;background:#08090c}
-.sky-caption h2{font-size:16px;margin:0}.sky-caption p{font-size:12px;color:#a9acb3;margin:0}
-.sky-credit{background:#08090c;text-align:right;font-size:10px;color:#999ca4;margin:0;padding:0 15px 11px}
-.sky-credit a{color:#c5d4eb}
-@media(max-width:620px){.sky-panel{margin:24px 0 36px!important}.sky-track{height:240px}.sky-caption{flex-direction:column;align-items:flex-start;gap:3px}.sky-image{background-size:cover,auto 125%}}
-@media(prefers-reduced-motion:reduce){.sky-image{transform:none}}
+
+/* Milky Way: a viewport-sized photographic panorama with an offline canvas fallback */
+:root{--sky-pan:0px;--sky-tilt:0deg}
+.sky-panel{position:relative;margin:28px 0 45px!important;border:1px solid #343740;background:#02040a;overflow:hidden}
+.sky-track{height:clamp(250px,43vw,390px);position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 54%,#192135,#050913 62%,#020309)}
+.sky-photo,.sky-fallback{position:absolute;top:50%;left:50%;height:130%;width:175%;max-width:none;display:block;object-fit:cover;object-position:center center;transform:translate3d(calc(-50% + var(--sky-pan)), -50%, 0) rotate(var(--sky-tilt));will-change:transform;pointer-events:none}
+.sky-photo{z-index:2;filter:brightness(.88) saturate(.89);transition:opacity .2s}
+.sky-photo.failed{opacity:0}
+.sky-fallback{z-index:1;height:130%}
+.sky-track::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(0deg,rgba(2,3,8,.31),transparent 37%,rgba(2,3,8,.18))}
+.sky-caption{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:12px 15px 6px;background:#08090c}
+.sky-caption h2{font-size:16px;margin:0}.sky-caption p{font-size:12px;margin:0;color:#adb0bb}
+.sky-credit{background:#08090c;font-size:10px;text-align:right;color:#9397a2;margin:0;padding:0 15px 12px}.sky-credit a{color:#c7d6ee}
+@media(max-width:620px){.sky-panel{margin:24px 0 38px!important}.sky-track{height:260px}.sky-photo,.sky-fallback{width:250%;height:140%}.sky-caption{align-items:flex-start;flex-direction:column;gap:3px}}
+@media(prefers-reduced-motion:reduce){.sky-photo,.sky-fallback{transform:translate3d(-50%,-50%,0);will-change:auto}}

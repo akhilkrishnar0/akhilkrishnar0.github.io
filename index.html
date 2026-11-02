@@ -32,8 +32,9 @@
 </div>
 </section>
 <section class="sky-panel" aria-labelledby="sky-title">
-  <div class="sky-track" role="img" aria-label="Panoramic view of the Milky Way from Earth">
-    <div class="sky-image" aria-hidden="true"></div>
+  <div class="sky-track" role="img" aria-label="Scrolling panoramic Milky Way sky with star fields and dust lanes">
+    <canvas class="sky-fallback" aria-hidden="true"></canvas>
+    <img class="sky-photo" src="https://cdn.eso.org/images/large/eso0932a.jpg" alt="" aria-hidden="true" decoding="async" loading="eager">
   </div>
   <div class="sky-caption"><h2 id="sky-title">Milky Way sky</h2><p>Scroll to pan across the Galactic plane.</p></div>
   <p class="sky-credit">Photograph: <a href="https://www.eso.org/public/images/eso0932a/" target="_blank" rel="noopener noreferrer">ESO / S. Brunier</a></p>

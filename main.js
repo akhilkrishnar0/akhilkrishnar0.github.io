@@ -1,21 +1,56 @@
 'use strict';
-const year=document.getElementById('year');
-if(year)year.textContent=new Date().getFullYear();
-const sky=document.querySelector('.sky-panel');
-const root=document.documentElement;
-const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
-let queued=false;
-function updateSky(){
-  queued=false;
-  if(!sky||reduceMotion.matches)return;
-  const rect=sky.getBoundingClientRect();
-  const height=innerHeight||document.documentElement.clientHeight;
-  const p=Math.max(0,Math.min(1,(height-rect.top)/(height+rect.height)));
-  root.style.setProperty('--sky-x',(12+p*76).toFixed(2)+'%');
-  root.style.setProperty('--sky-y',(48-p*6).toFixed(2)+'%');
-  root.style.setProperty('--sky-tilt',(-1.8+p*3.6).toFixed(2)+'deg');
-}
-function queueSky(){if(!queued){queued=true;requestAnimationFrame(updateSky)}}
-queueSky();
-addEventListener('scroll',queueSky,{passive:true});
-addEventListener('resize',queueSky);
+const year=document.getElementById('year');if(year)year.textContent=new Date().getFullYear();
+(()=>{
+ const panel=document.querySelector('.sky-panel'),canvas=document.querySelector('.sky-fallback'),photo=document.querySelector('.sky-photo');
+ if(!panel||!canvas)return;
+ const ctx=canvas.getContext('2d');if(!ctx)return;
+ const W=1800,H=700;canvas.width=W;canvas.height=H;
+ let seed=749207;const rand=()=>{seed=(1664525*seed+1013904223)>>>0;return seed/4294967296};
+ const base=ctx.createLinearGradient(0,0,0,H);base.addColorStop(0,'#03050c');base.addColorStop(.42,'#0a1223');base.addColorStop(.7,'#070c16');base.addColorStop(1,'#010307');ctx.fillStyle=base;ctx.fillRect(0,0,W,H);
+ // Wide, textured star-rich Milky Way band viewed from within the disk.
+ for(let i=0;i<9500;i++){
+   const x=rand()*W;const center=H*(.47+.13*Math.sin((x/W)*Math.PI*2.2-.9));
+   const y=center+(rand()+rand()+rand()-1.5)*H*.39;
+   const dist=Math.abs((y-center)/H),density=Math.exp(-dist*dist/0.019);
+   if(rand()>density*.94+.06)continue;
+   const warm=rand(),r=.17+Math.pow(rand(),6)*2.1;ctx.globalAlpha=(.09+rand()*.72)*density;
+   ctx.fillStyle=warm<.37?'#eecfa6':warm<.68?'#bacbe9':'#e4eafb';
+   ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+ }
+ ctx.globalAlpha=1;
+ // Soft integrated stellar glow, strongly concentrated around the Galactic plane.
+ ctx.globalCompositeOperation='screen';
+ for(let i=0;i<410;i++){
+   const x=rand()*W,y0=H*(.47+.13*Math.sin((x/W)*Math.PI*2.2-.9));
+   const y=y0+(rand()-.5)*170,r=14+rand()*95;
+   const g=ctx.createRadialGradient(x,y,0,x,y,r);
+   const a=.012+rand()*.024;g.addColorStop(0,'rgba(184,167,146,'+a+')');g.addColorStop(1,'rgba(23,28,50,0)');
+   ctx.fillStyle=g;ctx.fillRect(x-r,y-r,r*2,r*2);
+ }
+ ctx.globalCompositeOperation='source-over';
+ // Dark dust silhouettes crossing the luminous band.
+ for(let i=0;i<155;i++){
+   const x=rand()*W,y0=H*(.47+.13*Math.sin((x/W)*Math.PI*2.2-.9));
+   const y=y0+(rand()-.5)*105,rx=22+rand()*135,ry=5+rand()*19;
+   ctx.save();ctx.translate(x,y);ctx.rotate((rand()-.5)*.8);ctx.fillStyle='rgba(1,3,8,'+(.08+rand()*.29)+')';ctx.beginPath();ctx.ellipse(0,0,rx,ry,0,0,Math.PI*2);ctx.fill();ctx.restore();
+ }
+ // Foreground stars remain sharp against the clouds.
+ for(let i=0;i<1400;i++){
+   const x=rand()*W,y=rand()*H,r=.25+Math.pow(rand(),12)*2.4;
+   ctx.globalAlpha=.25+rand()*.72;ctx.fillStyle=rand()<.25?'#f4daba':'#dce9ff';ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+ }
+ ctx.globalAlpha=1;
+ if(photo){photo.addEventListener('error',()=>photo.classList.add('failed'));if(photo.complete&&photo.naturalWidth===0)photo.classList.add('failed')}
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ let raf=0;
+ function update(){
+  raf=0;if(reduced.matches){panel.style.setProperty('--sky-pan','0px');panel.style.setProperty('--sky-tilt','0deg');return}
+  const r=panel.getBoundingClientRect(),vh=innerHeight||document.documentElement.clientHeight;
+  const p=Math.max(0,Math.min(1,(vh-r.top)/(vh+r.height)));
+  const span=Math.min(r.width*.29,280);
+  panel.style.setProperty('--sky-pan',((.5-p)*2*span).toFixed(1)+'px');
+  panel.style.setProperty('--sky-tilt',((p-.5)*2.4).toFixed(2)+'deg');
+ }
+ function tick(){if(!raf)raf=requestAnimationFrame(update)}
+ update();addEventListener('scroll',tick,{passive:true});addEventListener('resize',tick);reduced.addEventListener?.('change',tick);
+})();
