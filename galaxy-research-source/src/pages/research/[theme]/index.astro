@@ -1,0 +1,12 @@
+---
+import Base from '../../../layouts/Base.astro';
+import {themes} from '../../../data/themes.js';
+import {projects} from '../../../data/projects.js';
+import {images} from '../../../data/images.js';
+import {url} from '../../../utils/path.js';
+export function getStaticPaths(){return themes.map(theme=>({params:{theme:theme.slug},props:{theme}}));}
+const {theme}=Astro.props;
+const items=projects.filter(p=>p.theme===theme.slug);
+---
+<Base title={theme.title} description={theme.intro}><div class="container"><div class="breadcrumb"><a href={url('research/')}>Research</a> / {theme.title}</div><header class="page-header"><div class="eyebrow">{theme.status}</div><h1>{theme.title}</h1><p class="lede">{theme.intro}</p></header>{theme.image&&<section class="section"><figure class="research-figure"><img src={images[theme.image].src} alt={images[theme.image].alt} loading="lazy" style="width:100%;max-height:520px;object-fit:contain;border:1px solid var(--line)"/><figcaption>Original research image. <span class="credit">{images[theme.image].credit}. <a href={images[theme.image].source} target="_blank" rel="noopener noreferrer">Publication</a>.</span></figcaption></figure></section>}
+<section class="section"><div class="eyebrow">Studies</div><h2>Projects and galaxies</h2>{items.map(p=><a class="link-row" href={url(`research/${theme.slug}/${p.slug}/`)} style="grid-template-columns:minmax(160px,30%) 1fr"><div class="eyebrow">{p.eyebrow}</div><div><h2>{p.title}</h2><p>{p.question}</p><span class="link-label">View study →</span></div></a>)}</section></div></Base>

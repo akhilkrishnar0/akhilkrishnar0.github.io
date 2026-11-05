@@ -1,0 +1,13 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import {projects} from '../../../../data/projects.js';
+import {themeBySlug} from '../../../../data/themes.js';
+import Figure from '../../../../components/Figure.astro';
+import PaperRefs from '../../../../components/PaperRefs.astro';
+import {url} from '../../../../utils/path.js';
+export function getStaticPaths(){return projects.map(project=>({params:{theme:project.theme,slug:project.slug},props:{project}}));}
+const {project}=Astro.props;
+const theme=themeBySlug(project.theme);
+const hasResults=project.findings.length>0;
+---
+<Base title={project.title} description={project.question}><div class="container"><div class="breadcrumb"><a href={url('research/')}>Research</a> / <a href={url(`research/${theme.slug}/`)}>{theme.title}</a> / {project.title}</div><header class="page-header"><div class="eyebrow">{project.eyebrow}</div><h1>{project.title}</h1><p class="lede">{project.question}</p></header><div class="project-detail"><div><section><h2>Scientific question</h2><p>{project.question}</p></section><section><h2>Work carried out</h2><ul>{project.work.map(item=><li>{item}</li>)}</ul></section><section><h2>{hasResults?'Key findings':'Current status'}</h2>{hasResults?<ul>{project.findings.map(item=><li>{item}</li>)}</ul>:<div class="muted-panel"><div class="status">Ongoing research</div><p>No unpublished results or preliminary simulation plots are presented as established findings. The page will be updated when results are approved for release.</p></div>}</section></div><aside>{project.figures.length>0?<><div class="eyebrow">Original published figures</div>{project.figures.map(f=><Figure imageKey={f.key} id={f.id} caption={f.caption}/>)}</>:<div class="muted-panel"><div class="eyebrow">Images</div><p>Original published images will be added after the source file and reuse rights have been confirmed. No substitute or reconstructed data have been used.</p></div>}</aside></div><PaperRefs ids={project.papers}/><p style="margin-top:45px"><a class="subtle-link" href={url(`research/${project.theme}/`)}>← Back to {theme.title}</a></p></div></Base>

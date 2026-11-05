@@ -1,0 +1,5 @@
+---
+import Base from '../layouts/Base.astro';
+import {photographs} from '../data/photography.js';
+---
+<Base title="Photography" description="Personal photography by Akhil Krishna R., with original photographs to be added."><div class="container"><header class="page-header"><div class="eyebrow">Personal collection</div><h1>Photography</h1><p class="lede">Astronomy, observatories, research travel and landscapes. Only photographs supplied and approved by me will be shown.</p></header><section class="section">{photographs.length===0?<div class="gallery-empty"><div><strong>No photographs uploaded yet</strong>Original files will be added with optional date and location captions. No stock images are used.</div></div>:<div class="photo-grid">{photographs.map(p=><figure class="photo-item"><a href={p.src} target="_blank" rel="noopener noreferrer" aria-label={`Open ${p.alt} at full resolution`}><img src={p.src} alt={p.alt} loading="lazy"/><span>View full resolution ↗</span></a><figcaption>{p.caption}{p.date&&<span class="credit">{p.date}</span>}{p.credit&&<span class="credit">Credit: {p.credit}</span>}</figcaption></figure>)}</div>}</section></div></Base>

@@ -1,0 +1,5 @@
+---
+import Base from '../layouts/Base.astro';
+import {url} from '../utils/path.js';
+---
+<Base title="Page not found"><div class="container"><header class="page-header"><h1>Page not found</h1><p class="lede">This page is unavailable or its address has changed.</p><a class="subtle-link" href={url()}>Return to homepage →</a></header></div></Base>

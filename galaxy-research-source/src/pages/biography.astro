@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import {url} from '../utils/path.js';
+const timeline=[
+ ['2025–Present','Postdoctoral Fellow','Indian Institute of Astrophysics, Bengaluru. Research on extended discs, ultraviolet star formation and galaxy evolution.'],
+ ['2020–2025','Ph.D. in Physics','Christ University, Bengaluru. Thesis: Tracing the Evolution of Polar Ring Galaxies through Multi-wavelength Observations and Cosmological Simulations. Supervisor: Dr. Sreeja S. Kartha.'],
+ ['2019–2020','Research Fellow','Christ University, Bengaluru. Research on ultraviolet upturn in early-type galaxies.'],
+ ['2017–2019','M.Sc. in Physics','Christ University, Bengaluru. Thesis: UV Upturn in Early-Type Galaxies. Supervisor: Dr. Sreeja S. Kartha.'],
+ ['2014–2017','B.Sc. in Physics','Catholicate College, Mahatma Gandhi University, Kerala.']
+];
+---
+<Base title="Biography" description="Education, appointments, research experience and academic service of Akhil Krishna R."><div class="container"><header class="page-header"><div class="eyebrow">Curriculum vitae</div><h1>Biography</h1><p class="lede">Akhil Krishna R. is a postdoctoral fellow at the Indian Institute of Astrophysics, Bengaluru, working on galaxy structure and evolution.</p><div class="inline-links"><a href={url('documents/Akhil_Krishna_R_public_CV.pdf')} download>Download public CV (PDF)</a><a href="https://orcid.org/0000-0002-6096-3330" target="_blank" rel="noopener noreferrer">ORCID</a></div></header><section class="section narrow"><h2>Academic journey</h2><div class="timeline">{timeline.map(([time,position,detail])=><div class="timeline-row"><div>{time}</div><div><h3>{position}</h3><p>{detail}</p></div></div>)}</div>
+<div class="prose-block"><h2>Research</h2><p>Polar-ring galaxies, ultraviolet stellar populations, globular cluster systems, giant low-surface-brightness galaxies, star formation and disc dynamics. My work combines multiwavelength imaging, photometric analysis, modelling and simulations.</p></div>
+<div class="prose-block"><h2>Collaborations and memberships</h2><p>WALLABY (Widefield ASKAP L-band Legacy All-sky Blind surveY) collaboration member; life member of the Astronomical Society of India. Research co-authorships span galaxy evolution, star formation and stellar astrophysics.</p></div>
+<div class="prose-block"><h2>Teaching and mentoring</h2><p>Mentored five M.Sc. thesis students. Teaching experience in introductory astronomy, Python programming and astronomy laboratory courses. Resource person for astronomy workshops.</p></div>
+<div class="prose-block"><h2>Observational programmes</h2><ul><li>AstroSat/UVIT — awarded time across four proposal cycles (A11, A12, A14, T05).</li><li>3.6-m Devasthal Optical Telescope / ADFOSC — Director’s Discretionary Time.</li><li>ESO New Technology Telescope / EFOSC2 — Period 113 awarded observing time.</li></ul></div>
+<div class="prose-block"><h2>Academic service</h2><p>Editorial Assistant, <em>Mapana Journal of Sciences</em> (2021–present); local organizing committees for YAM 2024, a 2023 national astrophysics seminar and ASI 2019. Workshop resource person: COSPAR Capacity Building Workshop (2025) and National Workshop on Optical Astronomy (2025).</p></div>
+</section></div></Base>

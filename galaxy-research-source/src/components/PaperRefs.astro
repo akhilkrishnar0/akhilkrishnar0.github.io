@@ -1,0 +1,6 @@
+---
+import {byId} from '../data/publications.js';
+import {adsForDoi} from '../utils/path.js';
+const {ids=[]}=Astro.props;
+---
+{ids.length>0&&<section class="paper-refs"><h2>Associated publications</h2>{ids.map(id=>byId(id)).filter(Boolean).map(p=><article class="ref-entry"><div class="eyebrow">{p.year} · {p.journal}</div><h3>{p.title}</h3><p class="quiet">{p.authors}</p><div class="inline-links">{p.doi&&<a href={`https://doi.org/${p.doi}`} target="_blank" rel="noopener noreferrer">DOI</a>}{p.doi&&<a href={adsForDoi(p.doi)} target="_blank" rel="noopener noreferrer">NASA ADS</a>}{p.arxiv&&<a href={`https://arxiv.org/abs/${p.arxiv}`} target="_blank" rel="noopener noreferrer">arXiv</a>}</div></article>)}</section>}

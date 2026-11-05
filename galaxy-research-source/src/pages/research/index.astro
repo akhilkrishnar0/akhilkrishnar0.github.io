@@ -1,0 +1,7 @@
+---
+import Base from '../../layouts/Base.astro';
+import {themes} from '../../data/themes.js';
+import {images} from '../../data/images.js';
+import {url} from '../../utils/path.js';
+---
+<Base title="Research" description="Research themes: polar-ring galaxies, giant low-surface-brightness galaxies, galaxy dynamics and stellar populations."><div class="container"><header class="page-header"><div class="eyebrow">Scientific work</div><h1>Research</h1><p class="lede">Galaxy structure and evolution studied through ultraviolet, optical and radio observations, stellar populations and dynamical models.</p></header><section class="section">{themes.map(t=><a class="link-row" href={url(`research/${t.slug}/`)}><div>{t.image?<img class="thumb" src={images[t.image].src} alt={images[t.image].alt} loading="lazy"/>:<div class="thumb empty-surface">Research in progress<br/>Published figure to be added</div>}{t.image&&<p class="credit">{images[t.image].credit}</p>}</div><div><div class="eyebrow">{t.status}</div><h2>{t.title}</h2><p>{t.intro}</p><span class="link-label">Explore research →</span></div></a>)}</section></div></Base>

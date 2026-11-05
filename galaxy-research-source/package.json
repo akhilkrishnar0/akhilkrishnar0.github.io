@@ -1,0 +1,9 @@
+{
+  "name":"akhil-galaxy-research",
+  "version":"1.0.0",
+  "private":true,
+  "type":"module",
+  "scripts":{"dev":"astro dev","build":"astro build","preview":"astro preview","check:links":"node scripts/check-links.mjs"},
+  "dependencies":{"astro":"^5.16.0"},
+  "engines":{"node":">=20.11"}
+}

@@ -1,0 +1,11 @@
+---
+import {url} from '../utils/path.js';
+const nav=[['Research','research/'],['Publications','publications/'],['Biography','biography/'],['Conferences','conferences/'],['News','news/'],['Photography','photography/']];
+const current=Astro.url.pathname;
+---
+<header class="site-header"><div class="nav-shell">
+  <a class="wordmark" href={url()} aria-label="Akhil Krishna R — home"><strong>Akhil Krishna R.</strong><small>Astrophysics / IIA</small></a>
+  <nav class="primary-nav" aria-label="Main navigation">
+    {nav.map(([label,href])=><a class:list={['nav-link',{active:current.startsWith(url(href))}]} href={url(href)} aria-current={current.startsWith(url(href))?'page':undefined}>{label}</a>)}
+  </nav>
+</div></header>

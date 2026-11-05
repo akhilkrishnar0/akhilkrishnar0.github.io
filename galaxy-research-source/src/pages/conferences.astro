@@ -1,0 +1,5 @@
+---
+import Base from '../layouts/Base.astro';
+import {activities} from '../data/media.js';
+---
+<Base title="Conferences & Activities" description="Verified talks, posters, conferences, teaching workshops and academic service."><div class="container"><header class="page-header"><div class="eyebrow">Academic activity</div><h1>Conferences & Activities</h1><p class="lede">Selected talks, poster presentations, workshops and professional activities recorded in my CV. Dates and presentation titles are listed only where verified.</p></header><section class="section narrow"><div class="timeline">{activities.map(a=><div class="timeline-row"><div>{a.year}{a.date&&<p class="small">{a.date}</p>}</div><div><div class="eyebrow">{a.type}</div><h3>{a.event}</h3><p>{a.location}</p></div></div>)}</div><div class="muted-panel">Conference photographs will be added after the original files and captions are supplied.</div></section></div></Base>

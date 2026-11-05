@@ -1,0 +1,5 @@
+---
+import Base from '../layouts/Base.astro';
+import {images} from '../data/images.js';
+---
+<Base title="Image credits" description="Provenance and attribution for every external image used on this website."><div class="container"><header class="page-header"><div class="eyebrow">Scientific attribution</div><h1>Image credits</h1><p class="lede">Only original research figures and archival astronomical images are linked. Personal and conference images are not yet included.</p></header><section class="section bibliography narrow">{Object.entries(images).map(([key,img])=><article><div class="eyebrow">{key}</div><h3>{img.alt}</h3><p>{img.credit}</p><p><strong>Usage:</strong> {img.license}</p><div class="inline-links"><a href={img.source} target="_blank" rel="noopener noreferrer">Source & rights ↗</a><a href={img.src} target="_blank" rel="noopener noreferrer">Image file ↗</a></div></article>)}</section></div></Base>

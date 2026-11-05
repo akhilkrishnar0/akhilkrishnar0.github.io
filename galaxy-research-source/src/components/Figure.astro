@@ -1,0 +1,17 @@
+---
+import {images} from '../data/images.js';
+const {imageKey,id,caption,className=''}=Astro.props;
+const img=images[imageKey];
+---
+{img&&<figure class:list={['research-figure',className]}>
+  <button class="figure-open" type="button" aria-label={`Expand ${id||'scientific figure'}`} data-figure-open><img src={img.src} alt={img.alt} loading="lazy" decoding="async" referrerpolicy="no-referrer"/><span>View figure ↗</span></button>
+  <figcaption><strong>{id}{id?' — ':''}</strong>{caption||img.alt}<span class="credit">Credit: {img.credit}. <a href={img.source} target="_blank" rel="noopener noreferrer">Original source</a>.</span></figcaption>
+  <dialog class="figure-dialog"><div class="dialog-actions"><button type="button" class="dialog-close" aria-label="Close image">Close ×</button><a href={img.src} target="_blank" rel="noopener noreferrer">Open original resolution ↗</a></div><div class="dialog-scroll"><img src={img.src} alt={img.alt}/></div><p class="dialog-caption">{caption||img.alt} · {img.credit}</p></dialog>
+</figure>}
+<script>
+  document.addEventListener('click',e=>{
+    const button=e.target.closest('[data-figure-open]');if(button){button.closest('figure')?.querySelector('dialog')?.showModal();return;}
+    const close=e.target.closest('.dialog-close');if(close){close.closest('dialog')?.close();return;}
+    if(e.target instanceof HTMLDialogElement)e.target.close();
+  });
+</script>
