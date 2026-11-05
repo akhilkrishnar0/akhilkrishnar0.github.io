@@ -3,3 +3,6 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
 .photo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.photo-item{margin:0}.photo-item img{width:100%;height:290px;object-fit:cover}.photo-item>a>span{font-size:.8rem;color:var(--muted)}.photo-item figcaption{font-size:.88rem;margin-top:7px;color:var(--muted)}@media(max-width:900px){.photo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:610px){.photo-grid{grid-template-columns:1fr}.photo-item img{height:auto}}
+
+/* Original figure thumbnails in verified news items; no decorative imagery. */
+.news-story{display:grid;grid-template-columns:minmax(0,280px) minmax(0,1fr);gap:25px;align-items:start}.news-figure{margin:0}.news-figure img{width:100%;height:auto;max-height:240px;object-fit:contain;background:#0b0d10;border:1px solid var(--line)}.news-figure figcaption{font-size:.73rem;line-height:1.45;color:var(--muted);padding-top:7px}.news-figure figcaption a{text-decoration:underline;text-underline-offset:2px}.news-story h3{margin-top:0}@media(max-width:760px){.news-story{grid-template-columns:1fr}.news-figure img{max-height:400px}}

@@ -4,7 +4,14 @@ Astro-based academic website, prepared as a **separate GitHub Pages project site
 
 `https://akhilkrishnar0.github.io/galaxy-research/`
 
-**Status:** source package prepared for review. **Not uploaded, not deployed, and not connected back from the existing homepage.** The site uses remote, attributable original astronomical image URLs where local, high-quality downloads could not be acquired. Personal and conference photographs have not been supplied.
+**Publication status:** static export committed to `akhilkrishnar0/akhilkrishnar0.github.io` under `/galaxy-research/`; the original homepage contains a **More about me** link. GitHub Actions is configured to deploy the root Pages repository on changes to `main`. The live deployment and external image retrieval require independent browser verification.
+
+There are **two copies** in the existing GitHub repository:
+
+- `galaxy-research/` — the published static HTML/CSS and public CV.
+- `galaxy-research-source/` — this editable Astro source and build scripts.
+
+No separate `galaxy-research` repository has been created. The static export is maintained to avoid requiring npm install on the GitHub Pages runner.
 
 ## Requirements
 
@@ -26,21 +33,17 @@ node scripts/export-publications.mjs
 
 The `astro.config.mjs` settings `site: 'https://akhilkrishnar0.github.io'` and `base: '/galaxy-research'` are already configured. **Do not change the base without updating `src/utils/path.js`.** All in-site paths are generated with `url()` to preserve the project subdirectory.
 
-## Deploy (only after approval)
+## Redeploy the existing GitHub Pages site
 
-1. Create a **new, empty public repository** named `galaxy-research` under `akhilkrishnar0`. Do **not** push to `akhilkrishnar0.github.io`.
-2. From this folder, initialize Git, commit and push to the new repo's `main` branch.
-3. In the new repository's **Settings → Pages**, select **GitHub Actions** as the build/deployment source.
-4. The included `.github/workflows/deploy.yml` will install Astro, build, and deploy the site on pushes to `main`. Trigger workflow manually if necessary.
-5. Verify the base-path URL above. Inspect all images, relative links, DOI links, layout and credit statements before making the site public.
-6. To connect to the existing website, **after separate approval**, add this small HTML link to the main homepage:
+This site's production static files live in `akhilkrishnar0/akhilkrishnar0.github.io/galaxy-research/`. The existing root repository workflow at `.github/workflows/pages.yml` deploys GitHub Pages on a push to `main`. It is **not** necessary to create a new repository.
 
-```html
-<a href="https://akhilkrishnar0.github.io/galaxy-research/">Galaxy research</a>
-```
+1. Update content in `galaxy-research-source/src/data/` and the Astro layouts.
+2. Run `npm install && npm run build && npm run check:links` when npm is available; the included `node scripts/build-static.mjs` is an additional dependency-free static exporter for this site and can be used without Astro install.
+3. Copy the resulting HTML/CSS/assets from `dist/` to the repository's `galaxy-research/` directory. Keep the public CV at `galaxy-research/documents/`.
+4. Commit only the source and the updated export; push to `main`. The existing Pages workflow should trigger.
+5. Verify `https://akhilkrishnar0.github.io/galaxy-research/` in a browser and the GitHub Actions workflow result. If GitHub Pages is not enabled, in root repository **Settings → Pages**, choose **GitHub Actions**.
 
-No existing repository was changed while preparing this package.
-
+The full source is also provided as a ZIP for local editing. Do not make unrelated changes to the original homepage.
 ## Where to edit
 
 | Content | File |
@@ -63,7 +66,7 @@ Add one record to `src/data/publications.js`, with a unique `id`, full title, ac
 
 ## Adding research images
 
-`src/data/images.js` is the attribution/source-of-truth registry. Currently source images are linked from authoritative NASA and Cambridge pages, plus a published figure reproduced on Phys.org. **They are not binary files packaged inside this ZIP.** See `docs/IMAGE_RIGHTS.csv` for each source, credit, reuse status and local asset destination. Be aware that third-party sites can change their URLs or prohibit hotlinking. Self-host authorized originals whenever obtained.
+`src/data/images.js` is the attribution/source-of-truth registry. Currently source images are remotely linked from authoritative NASA and Cambridge pages and selected published figures reproduced by Phys.org / Deccan Herald. **They are not binary image files packaged inside this ZIP.** See `docs/IMAGE_RIGHTS.csv` for each source, credit, reuse status and local asset destination. Be aware that third-party sites can change their URLs or prohibit hotlinking. Self-host authorized originals whenever obtained.
 
 For each image, obtain an original high-resolution file from the identified publisher/archive source, confirm source-specific permissions, and copy it under `public/images/research/{theme}/` or `public/images/homepage/`. Set the `src` property in `src/data/images.js` to a project-local URL such as `/galaxy-research/images/research/polar-rings/fig1.png`. Do not remove any original axis labels or crop away legends. Keep figure captions and exact credit statements.
 
@@ -95,3 +98,7 @@ Copy original images into `public/images/photography/` and `public/images/confer
 See `docs/MISSING_ASSETS_AND_REVIEW.md` for a detailed checklist. In particular: publisher-quality figures for DJ0240 and the UV upturn paper, additional NGC 4262 panels, GLSB project imagery, simulation figures approved for sharing, conference and personal photographs, and final reconciliation of a few coauthor records.
 
 The source package has not been Astro-built in this environment because Astro was not locally installed and the runtime lacked external package network access. The GitHub Actions build is configured for ordinary GitHub-hosted runners, but deployment must be tested when the project is uploaded.
+
+## News images — 2026-11-06 update
+
+The News & Media page displays the original scientific figures shown in the Phys.org DJ0240 and NGC 4262 stories and the UVIT/JWST figure shown by Deccan Herald. Each figure is labelled with the scientific creators, source article and image credit. The research articles themselves have open-access licensing where noted; **news-site renditions are remotely linked, not copied or relicensed here**. Their availability depends on third-party CDNs. The DJ0240 project page now includes its original DECaLS composite.

@@ -17,16 +17,16 @@ Reference biography: `CV_akr2026.pdf`, September 2026. Only the **sanitized publ
 | NGC 3718 | Akhil et al. 2025 PASA | Published | Fig. 1 + Fig. A1, original publisher links |
 | NGC 2685 | Akhil et al. 2025 PASA | Published | Fig. 1 + Fig. A1, original publisher links |
 | NGC 4262 | Akhil et al. 2024 MNRAS and 2025 PASA | Published | 2024 Fig. 1 (news reproduction) + 2025 Fig. 1 |
-| DJ0240 | Akhil et al. 2024 A&A | Published; candidate classification | No figure binary yet; paper link and results included |
+| DJ0240 | Akhil et al. 2024 A&A | Published; candidate classification | Published DECaLS optical composite (remote Phys.org link); more diagnostic figures pending |
 | Virgo UV upturn | Akhil et al. 2024 MNRAS | Published | No figure binary yet; verified results included |
 | GLSB extended disks | Ongoing | No published results presented | Pending real image |
 | Stellar bar formation/suppression | Ongoing | No simulations publicly presented | Pending approved results |
 
 ## Press and news
 
-- Phys.org, 2023-09-05, “New ring galaxy discovered by Indian astronomers” — confirmed directly.
-- Phys.org, 2024-04-23, “Observations explore globular cluster system in the galaxy NGC 4262” — confirmed directly.
-- Deccan Herald, late March 2024, “Study fuses UVIT, Webb images to unravel star formation impact” — search/listing evidence exists, but the original article's stable individual URL was not verified; therefore not included in public news cards yet.
+- Phys.org, 2023-09-05, “New ring galaxy discovered by Indian astronomers” — verified original DJ0240 image now displayed in News & Media.
+- Phys.org, 2024-04-23, “Observations explore globular cluster system in the galaxy NGC 4262” — original CFHT image now displayed in News & Media.
+- Deccan Herald, 2024-03-27, “Study fuses UVIT, Webb images to unravel star formation impact” — article URL verified at https://www.deccanherald.com/science/study-fuses-uvit-webb-images-to-unravel-star-formation-impact-2955118 ; original UVIT/JWST figure displayed remotely with credit.
 
 ## Primary source URLs
 
